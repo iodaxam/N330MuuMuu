@@ -8,13 +8,20 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 5;
     private Vector2 movementInput;
+    public float rotationSpeed = 70f;
 
     //Scripts
     public PlayerCombat combatScript;
 
     private void Update()
     {
-        transform.Translate(new Vector3(movementInput.x, 0, movementInput.y) * speed * Time.deltaTime);
+        if(movementInput != Vector2.zero)
+        {
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+
+            //Smoothly Rotate player in direction of the input
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(movementInput.x, 0f, movementInput.y)), Time.deltaTime * rotationSpeed);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context) => movementInput = context.ReadValue<Vector2>();
