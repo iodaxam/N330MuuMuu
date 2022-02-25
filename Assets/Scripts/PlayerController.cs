@@ -15,4 +15,13 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnMove(InputAction.CallbackContext context) => movementInput = context.ReadValue<Vector2>();
+
+    //Input information for the lmb
+    public void OnPrimaryAttack(InputAction.CallbackContext context)
+    {
+        if(context.performed) 
+        {
+            //Attack information here
+        }
+    }
 }
