@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
+
+
     public void InitiateAttack()
     {
         Debug.Log("AttackInitiated");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Collided WIth Something");
     }
 }
