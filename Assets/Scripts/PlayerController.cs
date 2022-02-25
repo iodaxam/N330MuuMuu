@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public float speed = 5;
     private Vector2 movementInput;
 
+    //Scripts
+    public PlayerCombat combatScript;
+
     private void Update()
     {
         transform.Translate(new Vector3(movementInput.x, 0, movementInput.y) * speed * Time.deltaTime);
@@ -20,8 +23,9 @@ public class PlayerController : MonoBehaviour
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
         if(context.performed) 
+        //^^ So that InitiateAttack() is only called once
         {
-            //Attack information here
+            combatScript.InitiateAttack();
         }
     }
 }
