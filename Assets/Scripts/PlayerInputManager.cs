@@ -11,7 +11,9 @@ using Vector3 = UnityEngine.Vector3;
 public class PlayerInputManager : MonoBehaviour
 {
 	public GameObject playerAverage;
+	
 	private GameObject[] m_PlayerList;
+
 	void OnPlayerJoined()
 	{
 		UpdatePlayerList();
