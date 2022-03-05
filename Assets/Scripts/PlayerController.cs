@@ -6,18 +6,26 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    //Movement
     public float speed = 5;
     private Vector2 movementInput;
     public float rotationSpeed = 70f; 
+    
+    //PlayerLifes
     public int MaxLives = 3;
     private int CurrentLives;
 
     //Scripts
     public PlayerCombat combatScript;
 
+    //Health
+    public float MaxHealth = 100;
+    private float CurrentHealth;
+
     private void Start()
     {
         CurrentLives = MaxLives;
+        CurrentHealth = MaxHealth;
     }
 
     private void Update()
