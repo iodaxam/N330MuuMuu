@@ -8,10 +8,17 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 5;
     private Vector2 movementInput;
-    public float rotationSpeed = 70f;
+    public float rotationSpeed = 70f; 
+    public int MaxLives = 3;
+    private int CurrentLives;
 
     //Scripts
     public PlayerCombat combatScript;
+
+    private void Start()
+    {
+        CurrentLives = MaxLives;
+    }
 
     private void Update()
     {
