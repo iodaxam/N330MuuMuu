@@ -12,7 +12,8 @@ namespace Weapons
         public GameObject weaponPrefab; // prefab of the weapon 
         public float damage;
         public float attackTime; // For melee: how long the swing animation is; for ranged: time between shots.
-    
+        public string name; // for the combat script to set animations etc.
+        
         protected bool Attacking;
         protected GameObject weapon;
         // Start is called before the first frame update

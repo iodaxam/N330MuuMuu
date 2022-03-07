@@ -271,7 +271,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   rotationSpeed: 70
+  MaxLives: 3
   combatScript: {fileID: 4619261772035983376}
+  MaxHealth: 100
 --- !u!114 &4619261772035983376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +286,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 413fab322e9095c49aa50388a2d6348f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selfObject: {fileID: 7229693698628411072}
+  weapons: []
+  AttackDuration: 2
+  CooldownTimerMax: 3
 --- !u!54 &3727242616790467990
 Rigidbody:
   m_ObjectHideFlags: 0
