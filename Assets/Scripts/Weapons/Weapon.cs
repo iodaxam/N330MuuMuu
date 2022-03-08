@@ -30,16 +30,6 @@ namespace Weapons
         public void Attack() // allow the parent class to tell the weapon it's attacking
         {
             Attacking = true;
-            StartCoroutine(nameof(AttackTimer));
         }
-    
-        private IEnumerator AttackTimer()
-        {
-            yield return new WaitForSeconds(attackTime);
-            Attacking = false;
-            // GetComponentInParent<Animator>().SetBool("Attacking" = false); 
-            // ^ for when we have an animator on the player class ^
-        }
-
     }
 }
