@@ -2565,8 +2565,6 @@ GameObject:
   - component: {fileID: 8579767074438484115}
   - component: {fileID: 8579767074438484114}
   - component: {fileID: -2221526295797234796}
-  - component: {fileID: 8112770473791701660}
-  - component: {fileID: 2333274401646817349}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2608,7 +2606,7 @@ Animator:
   m_GameObject: {fileID: 8581541884244095081}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 91028badc63f59f43a9c5bda64fbd608, type: 3}
-  m_Controller: {fileID: 9100000, guid: e5433eb5d6d911f4ea71e17f929e1afc, type: 2}
+  m_Controller: {fileID: 9100000, guid: 949174b63babbdd49bba034070f8e1c3, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -2659,7 +2657,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 020b196562d872847a43c40cc07702b8, type: 3}
+  m_Actions: {fileID: -944628639613478452, guid: 5ea96ee5ce03c7443b93ece71a91d4b2, type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -2673,76 +2671,18 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8112770473791701660}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnMove
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 68524dc7-70a5-4b3e-aa6c-5e7ae80ef19e
+      m_Calls: []
+    m_ActionId: f7a4fb78-d25d-4b48-b807-aa06612c8c94
     m_ActionName: Gameplay/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8112770473791701660}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnPrimaryAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: aa9f9b45-994c-487e-ba25-654e7348c0b3
-    m_ActionName: Gameplay/Primary Attack[/Mouse/leftButton]
+      m_Calls: []
+    m_ActionId: 3f2ee084-6e2c-4d16-a68b-d2e9969e5b76
+    m_ActionName: Gameplay/PrimaryAttack[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &8112770473791701660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8581541884244095081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 585272e2034d3fa40bf35312321118db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  rotationSpeed: 70
-  maxHealth: 0
---- !u!114 &2333274401646817349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8581541884244095081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4d81bd3a89c31c4ca7cf8692e58dc8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
-  rotation: {x: 0, y: 0, z: 0, w: 0}
-  scale: {x: 0, y: 0, z: 0}
-  attachmentPoint: {fileID: 0}
-  weaponPrefab: {fileID: 0}
-  damage: 25
-  attackTime: 1.267
 --- !u!1 &8581546005893027953
 GameObject:
   m_ObjectHideFlags: 0
