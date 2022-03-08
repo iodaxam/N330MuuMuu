@@ -23,17 +23,15 @@ public class PlayerController : MonoBehaviour
     private Weapon weapon;
 
     // Health
-    public float MaxHealth = 100;
-    private float CurrentHealth;
     private bool isDead;
-    
+    private HealthBar HealthBar;
     private void Start()
     {
         CurrentLives = MaxLives;
-        CurrentHealth = MaxHealth;
         animator = GetComponent<Animator>();
         weapon = GetComponent<Weapon>();
         animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be auto set based on weapon carried
+        
     }
 
     private void Update()
@@ -77,15 +75,7 @@ public class PlayerController : MonoBehaviour
 
     private void TakeDamage(float damageAmount)
     {
-        CurrentHealth -= Mathf.Clamp(damageAmount, 0, damageAmount);
-        if (CurrentHealth <= 0)
-        {
-            isDead = true;
-        }
-        else
-        {
-            animator.SetTrigger("GotHit"); // TODO: change this to something other than a trigger in the animator
-        }
+        HealthBar.TakeDamage(damageAmount);
     }
     
     
