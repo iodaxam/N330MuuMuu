@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
         CurrentHealth = MaxHealth;
         animator = GetComponent<Animator>();
         weapon = GetComponent<Weapon>();
+        animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be auto set based on weapon carried
     }
 
     private void Update()
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Movement code
     public void OnMove(InputAction.CallbackContext context) => movementInput = context.ReadValue<Vector2>();
 
     //Input information for the lmb
