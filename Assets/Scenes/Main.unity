@@ -2498,7 +2498,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186541254}
-  m_LocalRotation: {x: 0.31030247, y: 0.000000023132346, z: -0.000000007550745, w: 0.9506379}
+  m_LocalRotation: {x: 0.31030247, y: -0.000000023132339, z: 0.000000007550743, w: 0.9506379}
   m_LocalPosition: {x: 0, y: 6.43, z: -8.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2718,53 +2718,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6104618783337129552, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: playerAverage
-      value: 
-      objectReference: {fileID: 1566378815}
     - target: {fileID: 7998616700665580051, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
       propertyPath: m_Name
       value: Player Manager
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_JoinBehavior
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_NotificationBehavior
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.data[4].m_Id
-      value: 412f6756-7d72-49a6-8056-a98a2ee799b7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.data[4].m_Path
-      value: <Mouse>/leftButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 11500000, guid: fa3ef761767636846b97e5cb457becc8, type: 3}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.data[4].m_Action
-      value: Join
-      objectReference: {fileID: 0}
-    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7998616700665580053, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
       propertyPath: m_RootOrder
@@ -2965,11 +2921,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 412702, guid: 7b30b5ba44201104fba4e71a527b6905, type: 3}
   m_PrefabInstance: {fileID: 1427666301}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1430853730 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7998616700665580053, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
-  m_PrefabInstance: {fileID: 1384680715}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1479062706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3158,36 +3109,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 412702, guid: 7b30b5ba44201104fba4e71a527b6905, type: 3}
   m_PrefabInstance: {fileID: 1564190856}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1566378815
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1566378816}
-  m_Layer: 0
-  m_Name: PlayerAverage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1566378816
+--- !u!4 &1566378816 stripped
 Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 1566378816, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
+  m_PrefabInstance: {fileID: 1384680715}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566378815}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1430853730}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1579266046
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3401,7 +3327,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641107730}
-  m_LocalRotation: {x: 0.31030247, y: 0.000000023132346, z: -0.000000007550745, w: 0.9506379}
+  m_LocalRotation: {x: 0.31030247, y: -0.000000023132339, z: 0.000000007550743, w: 0.9506379}
   m_LocalPosition: {x: 0, y: 6.43, z: -8.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
