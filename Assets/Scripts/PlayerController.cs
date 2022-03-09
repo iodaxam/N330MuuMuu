@@ -23,19 +23,28 @@ public class PlayerController : MonoBehaviour
     private Weapon weapon;
 
     // Health
+    public float maxHealth = 100;
     private bool isDead;
+    
+    // Scripts
     private HealthBar HealthBar;
+    
     private void Start()
     {
         CurrentLives = MaxLives;
         animator = GetComponent<Animator>();
         weapon = GetComponent<Weapon>();
-        animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be auto set based on weapon carried
+        HealthBar = GetComponent<HealthBar>();
         
+        animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be auto set based on weapon carried
+
     }
 
     private void Update()
     {
+        if (isDead) return; // temporary code for testing death
+        
+        
         if(movementInput != Vector2.zero && !attacking)
         {
             animator.SetBool("Moving", true); // tell animator player is moving
@@ -73,11 +82,26 @@ public class PlayerController : MonoBehaviour
         SendMessage("SetAttacking", weapon);
     }
 
+    // Deal with taking damage
     private void TakeDamage(float damageAmount)
     {
         HealthBar.TakeDamage(damageAmount);
+        animator.SetBool("GotHit", true);
+        StartCoroutine(nameof(StaggerTime));
     }
     
+    private IEnumerator StaggerTime()
+    {
+        yield return new WaitForSeconds(0.5f);
+        animator.SetBool("GotHit", false);
+    }
+    
+    private void Died()
+    {
+        isDead = true;
+        animator.SetBool("Dead", true);
+        animator.Play("Default Idle");
+    }
     
     // =================== Weapon Swapping ================== //
     // below is some weapon swapping code that needs revisited.

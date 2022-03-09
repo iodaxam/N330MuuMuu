@@ -5,42 +5,32 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
-    public float MaxHealth = 100;
-    private float CurrentHealth;
+    private const float MaxHealth = 100;
+    private float m_CurrentHealth;
     public Slider healthBar;
     
-    private Camera cam;
+    private Camera m_Cam;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        CurrentHealth = MaxHealth;
-        cam = Camera.main;
+        m_CurrentHealth = MaxHealth;
+        m_Cam = Camera.main;
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        healthBar.value = CurrentHealth / MaxHealth;
+        healthBar.value = m_CurrentHealth / MaxHealth;
+        healthBar.transform.LookAt(m_Cam.transform);
     }
 
     public void TakeDamage(float damageAmount)
     {
-        CurrentHealth -= Mathf.Clamp(damageAmount, 0, damageAmount);
-        if (CurrentHealth == 0)
+        m_CurrentHealth -= Mathf.Clamp(damageAmount, 0, damageAmount);
+        if (m_CurrentHealth == 0)
         {
             SendMessageUpwards("Died");
         }
-        else
-        {
-            
-            GetComponentInParent<Animator>().SetBool("GotHit", true);
-            StartCoroutine(nameof(StaggerTime));
-        }
-    }
-    
-    private IEnumerator StaggerTime()
-    {
-        yield return new WaitForSeconds(0.5f);
-        GetComponentInParent<Animator>().SetBool("GotHit", false);
     }
 }
