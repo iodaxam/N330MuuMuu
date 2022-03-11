@@ -22,8 +22,18 @@ public class StoplightScript : MonoBehaviour
         GreenLight = GreenLightObject.GetComponent<Light>();
     }
 
-    private IEnumerator StopLightTme()
+    private IEnumerator StopLightTimer(EnumStopLight CurrentLightState)
     {
+        Debug.Log("Running");
+        // switch (CurrentLightState)
+        // {
+        //     case EnumStopLight.RedLightState:
+        //         break;
+        //     case EnumStopLight.YellowLightState:
+        //         break;
+        //     case EnumStopLight.GreenLightState:
+        //         break;
+        // }
         yield return null;
     }
 }
