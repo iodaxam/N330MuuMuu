@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     private const float MaxHealth = 100;
-    private float m_CurrentHealth;
-    public Slider healthBar;
+    private float m_CurrentHealth = 30;
+    private Slider healthBar;
     
     private Camera m_Cam;
 
     // Start is called before the first frame update
     private void Start()
     {
+        healthBar = GameObject.Find("Health Bar").GetComponent<Slider>();
         m_CurrentHealth = MaxHealth;
         m_Cam = Camera.main;
     }

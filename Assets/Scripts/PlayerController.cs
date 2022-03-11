@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Weapons;
@@ -19,8 +20,11 @@ public class PlayerController : MonoBehaviour
     private int CurrentLives;
 
     // Combat
+    private List<GameObject> WeaponList;
+    private int WeaponIndex;
+    public GameObject WeaponManager;
     private bool attacking;
-    private Weapon weapon;
+    private GameObject weapon;
 
     // Health
     public float maxHealth = 100;
@@ -31,13 +35,25 @@ public class PlayerController : MonoBehaviour
     
     private void Start()
     {
+        WeaponList = new List<GameObject>();
+        
         CurrentLives = MaxLives;
         animator = GetComponent<Animator>();
-        weapon = GetComponent<Weapon>();
         HealthBar = GetComponent<HealthBar>();
         
-        animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be auto set based on weapon carried
+        animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be set based on weapon carried
 
+        foreach (var child in WeaponManager.GetComponentsInChildren<Transform>())
+        {
+            if (child.CompareTag("Weapon") && child.gameObject != null)
+            {
+                WeaponList.Add(child.gameObject);
+            }
+        }
+        
+        Debug.Log(WeaponList.Capacity);
+        weapon = WeaponList[0].gameObject;
+        weapon.SetActive(true);
     }
 
     private void Update()
@@ -76,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator AttackTimer()
     {
-        yield return new WaitForSeconds(weapon.attackTime);
+        yield return new WaitForSeconds(weapon.GetComponent<Weapon>().attackTime);
         animator.SetBool("Attacking", false);
         attacking = false;
         SendMessage("SetAttacking", weapon);
@@ -102,7 +118,23 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Dead", true);
         animator.Play("Default Idle");
     }
-    
+
+    private void CycleWeapons()
+    {
+        WeaponIndex += 1;
+        if (WeaponIndex > WeaponList.Capacity)
+        {
+            WeaponIndex = 0;
+        }
+        
+        if (weapon != null)
+        {
+            weapon.SetActive(false);
+        }
+
+        weapon = WeaponList[WeaponIndex];
+        weapon.SetActive(true);
+    }
     // =================== Weapon Swapping ================== //
     // below is some weapon swapping code that needs revisited.
     // I didn't really get the chance to finish what I had
