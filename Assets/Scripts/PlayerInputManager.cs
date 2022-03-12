@@ -14,11 +14,19 @@ public class PlayerInputManager : MonoBehaviour
 	
 	private GameObject[] m_PlayerList;
 
+	public GameObject AudioManager;
+	private AudioManager AudioScript;
+
+	void Start() {
+		AudioScript = AudioManager.GetComponent<AudioManager>();
+	}
+
 	void OnPlayerJoined()
 	{
 		UpdatePlayerList();
 		Debug.Log("Player joined");
 		Debug.Log(m_PlayerList.Length);
+		AudioScript.Play("Player Join");
 	}
 
 	void OnPlayerLeft()
