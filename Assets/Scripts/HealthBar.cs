@@ -11,7 +11,7 @@ public class HealthBar : MonoBehaviour
     private GameObject GameManager;
     private GameManager GMscript;
 
-    public Rigidbody rb;
+    private Rigidbody rb;
     
     private Camera m_Cam;
 
@@ -29,16 +29,20 @@ public class HealthBar : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    private void Update()
+    {
+        if((GMscript.StopLightState == EnumStopLight.RedLightState) && (rb.velocity.normalized != Vector3.zero))
+        {
+            TakeDamage(10f);
+            Debug.Log("Taking Stoplight Damage");
+        }
+    }
+
     // Update is called once per frame
     void LateUpdate()
     {
         healthBar.value = m_CurrentHealth / MaxHealth;
         healthBar.transform.LookAt(m_Cam.transform);
-
-        if((GMscript.StopLightState == EnumStopLight.RedLightState) && (rb.velocity.normalized != Vector3.zero))
-        {
-            TakeDamage(10f);
-        }
     }
 
     public void TakeDamage(float damageAmount)
