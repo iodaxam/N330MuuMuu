@@ -12,15 +12,6 @@ public class StoplightScript : MonoBehaviour
     private Light YellowLight;
     private Light GreenLight;
 
-    private enum EnumStopLight {RedLightState, YellowLightState, GreenLightState};
-    private EnumStopLight StopLightState;
-
-    private float Timer;
-    public float GreenLightMaxTime;
-    public float GreenLightMinTime;
-    public float YellowLightTime = 2f;
-    public float RedLightTime = 3f;
-
     public float LightIntensity = 1f;
 
     private void Start() 
@@ -28,47 +19,9 @@ public class StoplightScript : MonoBehaviour
         RedLight = RedLightObject.GetComponent<Light>();
         YellowLight = YellowLightObject.GetComponent<Light>();
         GreenLight = GreenLightObject.GetComponent<Light>();
-
-        StopLightState = EnumStopLight.GreenLightState;
-
-        Timer = Random.Range(GreenLightMinTime, GreenLightMaxTime);
-
-        ChangeIntensity(StopLightState);
     }
 
-    private void Update()
-    {
-        StopLightTimer();
-        Debug.Log(StopLightState);
-    } 
-
-    private void StopLightTimer()
-    {
-        Timer -= Time.deltaTime;
-
-        if(Timer <= 0f)
-        {
-            switch (StopLightState)
-            {
-                case EnumStopLight.RedLightState:
-                    StopLightState = EnumStopLight.GreenLightState;
-                    Timer = Random.Range(GreenLightMinTime, GreenLightMaxTime);
-                    break;
-                case EnumStopLight.YellowLightState:
-                    StopLightState = EnumStopLight.RedLightState;
-                    Timer = RedLightTime;
-                    break;
-                case EnumStopLight.GreenLightState:
-                    StopLightState = EnumStopLight.YellowLightState;
-                    Timer = YellowLightTime;
-                    break;
-            }
-
-            ChangeIntensity(StopLightState);
-        }
-    }
-
-    private void ChangeIntensity(EnumStopLight NewLight)
+    public void ChangeIntensity(EnumStopLight NewLight)
     {
         switch(NewLight)
         {

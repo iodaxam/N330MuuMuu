@@ -107,8 +107,8 @@ GameObject:
   - component: {fileID: 1641844934924218258}
   - component: {fileID: 1388721875969751650}
   m_Layer: 0
-  m_Name: SM_Prop_TrafficLight_01
-  m_TagString: Untagged
+  m_Name: TrafficLightPrefab
+  m_TagString: StopLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -212,6 +212,7 @@ MonoBehaviour:
   GreenLightMinTime: 5
   YellowLightTime: 2
   RedLightTime: 3
+  LightIntensity: 1
 --- !u!1 &3952921952036308055
 GameObject:
   m_ObjectHideFlags: 0

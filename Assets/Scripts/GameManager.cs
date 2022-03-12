@@ -2,38 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnumStopLight {RedLightState, YellowLightState, GreenLightState};
+
 public class GameManager : MonoBehaviour
 {
-    private float LightDuration;
-    private float TimeRemaining;
-    
-    public float MaxLightDuration;
-    public float MinLightDuration;
+    private GameObject[] StopLights;
 
-    private enum EnumStopLight {RedLight, YellowLight, GreenLight};
-    private EnumStopLight StopLight;
-    
-    private void SetLightTimer(EnumStopLight CurrentLight) 
-    {
+    private EnumStopLight StopLightState;
 
-    }
+    private float Timer;
+    public float GreenLightMaxTime;
+    public float GreenLightMinTime;
+    public float YellowLightTime = 2f;
+    public float RedLightTime = 3f;
 
-    // Start is called before the first frame update
+    public float LightIntensity = 1f;
+
     void Start()
     {
-        StopLight = EnumStopLight.GreenLight;
-        SetLightTimer(StopLight);
+        StopLights = GameObject.FindGameObjectsWithTag("StopLight");
+
+        StopLightState = EnumStopLight.GreenLightState;
+
+        Timer = Random.Range(GreenLightMinTime, GreenLightMaxTime);
+
+        foreach(GameObject trafficLight in StopLights)
+        {
+            trafficLight.SendMessage("ChangeIntensity", StopLightState);
+        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        StopLightTimer();
     }
 
-    //Restarts the round
-    public void RestartRound()
+    private void StopLightTimer()
     {
+        Timer -= Time.deltaTime;
 
+        if(Timer <= 0f)
+        {
+            switch (StopLightState)
+            {
+                case EnumStopLight.RedLightState:
+                    StopLightState = EnumStopLight.GreenLightState;
+                    Timer = Random.Range(GreenLightMinTime, GreenLightMaxTime);
+                    break;
+                case EnumStopLight.YellowLightState:
+                    StopLightState = EnumStopLight.RedLightState;
+                    Timer = RedLightTime;
+                    break;
+                case EnumStopLight.GreenLightState:
+                    StopLightState = EnumStopLight.YellowLightState;
+                    Timer = YellowLightTime;
+                    break;
+            }
+
+            foreach(GameObject trafficLight in StopLights)
+            {
+                trafficLight.SendMessage("ChangeIntensity", StopLightState);
+            }
+        }
     }
 }

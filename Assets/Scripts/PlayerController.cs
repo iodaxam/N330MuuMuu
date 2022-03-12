@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 5;
     private Vector2 movementInput;
     public float rotationSpeed = 70f; 
+    private Rigidbody rb;
     
     // PlayerLives
     public int MaxLives = 3;
@@ -35,6 +36,8 @@ public class PlayerController : MonoBehaviour
     
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
+
         WeaponList = new List<GameObject>();
         
         CurrentLives = MaxLives;
@@ -58,6 +61,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //Debug.Log(rb.velocity.normalized);
+
         if (isDead) return; // temporary code for testing death
         
         
