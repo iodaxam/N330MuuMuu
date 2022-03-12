@@ -208,6 +208,10 @@ MonoBehaviour:
   RedLightObject: {fileID: 6389629033460678259}
   YellowLightObject: {fileID: 897239561467522296}
   GreenLightObject: {fileID: 3952921952036308055}
+  GreenLightMaxTime: 7
+  GreenLightMinTime: 5
+  YellowLightTime: 2
+  RedLightTime: 3
 --- !u!1 &3952921952036308055
 GameObject:
   m_ObjectHideFlags: 0
