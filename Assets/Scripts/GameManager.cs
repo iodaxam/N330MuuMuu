@@ -8,13 +8,15 @@ public class GameManager : MonoBehaviour
 {
     private GameObject[] StopLights;
 
-    private EnumStopLight StopLightState;
+    public EnumStopLight StopLightState;
 
     private float Timer;
     public float GreenLightMaxTime;
     public float GreenLightMinTime;
     public float YellowLightTime = 2f;
     public float RedLightTime = 3f;
+
+    public float DamageDrain = .01f;
 
     public float LightIntensity = 1f;
 
