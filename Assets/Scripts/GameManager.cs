@@ -6,6 +6,9 @@ public enum EnumStopLight {RedLightState, YellowLightState, GreenLightState};
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject AudioManager;
+    private AudioManager AudioScript;
+
     private GameObject[] StopLights;
 
     public EnumStopLight StopLightState;
@@ -22,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        AudioScript = AudioManager.GetComponent<AudioManager>();
+
         StopLights = GameObject.FindGameObjectsWithTag("StopLight");
 
         StopLightState = EnumStopLight.GreenLightState;
@@ -50,9 +55,13 @@ public class GameManager : MonoBehaviour
                 case EnumStopLight.RedLightState:
                     StopLightState = EnumStopLight.GreenLightState;
                     Timer = Random.Range(GreenLightMinTime, GreenLightMaxTime);
+                    AudioScript.Stop("Crosswalk Beep");
+                    AudioScript.Play("Background Jazz");
                     break;
                 case EnumStopLight.YellowLightState:
                     StopLightState = EnumStopLight.RedLightState;
+                    AudioScript.Play("Crosswalk Beep");
+                    AudioScript.Stop("Background Jazz");
                     Timer = RedLightTime;
                     break;
                 case EnumStopLight.GreenLightState:
@@ -60,6 +69,8 @@ public class GameManager : MonoBehaviour
                     Timer = YellowLightTime;
                     break;
             }
+
+            AudioScript.Play("Light Switch");
 
             foreach(GameObject trafficLight in StopLights)
             {
