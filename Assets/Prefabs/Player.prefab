@@ -3136,8 +3136,9 @@ MonoBehaviour:
   speed: 5
   rotationSpeed: 70
   MaxLives: 3
-  WeaponManager: {fileID: 9118674590571453252}
   maxHealth: 100
+  WeaponManager: {fileID: 9118674590571453252}
+  weapons: []
 --- !u!114 &2997650077359032056
 MonoBehaviour:
   m_ObjectHideFlags: 0

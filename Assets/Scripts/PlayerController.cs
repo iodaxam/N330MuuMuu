@@ -8,28 +8,32 @@ using Weapons;
 
 public class PlayerController : MonoBehaviour
 {
+    
     private Animator animator;
     public static Action AttackInput;
     
     // Movement
+    [Header("Movement")]
     public float speed = 5;
     private Vector2 movementInput;
     public float rotationSpeed = 70f; 
     
-    // PlayerLives
+    // Health
+    [Header("Health")]
     public int MaxLives = 3;
     private int CurrentLives;
+    public float maxHealth = 100;
+    private bool isDead;
 
     // Combat
+    [Header("Combat")]
     private int WeaponIndex;
     public GameObject WeaponManager;
     private bool attacking;
 
-    // Health
-    public float maxHealth = 100;
-    private bool isDead;
-    
     // Scripts
+    [Header("References")]
+    [SerializeField] private Transform[] weapons;
     private HealthBar HealthBar;
 
     private void Start()
@@ -37,7 +41,9 @@ public class PlayerController : MonoBehaviour
         CurrentLives = MaxLives;
         animator = GetComponent<Animator>();
         HealthBar = GetComponent<HealthBar>();
+        Debug.Log("Weapons.length: " + weapons.Length);
         
+        InitializeWeapons();
         animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be set based on weapon carried
     }
 
@@ -81,7 +87,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator AttackTimer()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.267f);
         animator.SetBool("Attacking", false);
         attacking = false;
     }
@@ -107,67 +113,35 @@ public class PlayerController : MonoBehaviour
         animator.Play("Default Idle");
     }
 
-    // private void CycleWeapons()
-    // {
-    //     WeaponIndex += 1;
-    //     if (WeaponIndex > WeaponList.Capacity)
-    //     {
-    //         WeaponIndex = 0;
-    //     }
-    //     
-    //     if (weapon != null)
-    //     {
-    //         weapon.SetActive(false);
-    //     }
-    //
-    //     weapon = WeaponList[WeaponIndex];
-    //     weapon.SetActive(true);
-    // }
-    //
-    
-    // =================== Weapon Swapping ================== //
-    // below is some weapon swapping code that needs revisited.
-    // I didn't really get the chance to finish what I had
-    // started with it because it was missing something...
-    
-    // public List<Weapon> weapons;
-    
-    // public enum EnumWeapons {HeavyMelee, LightMelee, Ranged};
-    // private EnumWeapons currentWeapon;
+    private void InitializeWeapons()
+    {
+        int weaponCount = WeaponManager.transform.childCount;
+        weapons = new Transform[weaponCount];
 
-    // public void SelectWeapon(EnumWeapons newWeapon)
-    // {
-    //     string weaponName;
-    //     if (currentWeapon == newWeapon) return;
-    //     switch (newWeapon)
-    //     {
-    //         case EnumWeapons.HeavyMelee:
-    //             weaponName = "HeavyMelee";
-    //             break;
-    //         
-    //         case EnumWeapons.LightMelee:
-    //             weaponName = "LightMelee";
-    //             break;
-    //         
-    //         case EnumWeapons.Ranged:
-    //             weaponName = "Ranged";
-    //             break;
-    //         
-    //         default:
-    //             weaponName = "HeavyMelee";
-    //             break;
-    //     }
-    //
-    //     foreach (Weapon weapon in weapons)
-    //     {
-    //         if (weaponName == weapon.name)
-    //         {
-    //             weapon.gameObject.SetActive(true);
-    //         }
-    //         else
-    //         {
-    //             weapon.gameObject.SetActive(false);
-    //         }
-    //     }
-    // }
+        for (int i = 0; i < weaponCount; i++)
+        {
+            weapons[i] = WeaponManager.transform.GetChild(i);
+        }
+        
+        CycleWeapons(0);
+    }
+    
+    private void CycleWeapons(int change)
+    {
+        WeaponIndex += change;
+        if (WeaponIndex < 0)
+        {
+            WeaponIndex = weapons.Length;
+        } 
+        else if (WeaponIndex > weapons.Length - 1)
+        {
+            WeaponIndex = 0;
+        }
+        
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            Debug.Log(weapons[i].gameObject.name);
+            weapons[i].gameObject.SetActive(i == WeaponIndex);
+        }
+    }
 }
