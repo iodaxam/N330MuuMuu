@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+//using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Weapons;
@@ -9,6 +9,7 @@ using Weapons;
 public class PlayerController : MonoBehaviour
 {
     private Animator animator;
+    public static Action AttackInput;
     
     // Movement
     public float speed = 5;
@@ -20,11 +21,9 @@ public class PlayerController : MonoBehaviour
     private int CurrentLives;
 
     // Combat
-    private List<GameObject> WeaponList;
     private int WeaponIndex;
     public GameObject WeaponManager;
     private bool attacking;
-    private GameObject weapon;
 
     // Health
     public float maxHealth = 100;
@@ -32,29 +31,14 @@ public class PlayerController : MonoBehaviour
     
     // Scripts
     private HealthBar HealthBar;
-    
+
     private void Start()
     {
-
-        WeaponList = new List<GameObject>();
-        
         CurrentLives = MaxLives;
         animator = GetComponent<Animator>();
         HealthBar = GetComponent<HealthBar>();
         
         animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be set based on weapon carried
-
-        foreach (var child in WeaponManager.GetComponentsInChildren<Transform>())
-        {
-            if (child.CompareTag("Weapon") && child.gameObject != null)
-            {
-                WeaponList.Add(child.gameObject);
-            }
-        }
-        
-        Debug.Log(WeaponList.Capacity);
-        weapon = WeaponList[0].gameObject;
-        weapon.SetActive(true);
     }
 
     private void Update()
@@ -84,21 +68,22 @@ public class PlayerController : MonoBehaviour
     //Input information for the lmb
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
+        Debug.Log("OnPrimaryAttack");
         if(!attacking)
         {
+            Debug.Log("Attacking");
             attacking = true;
             animator.SetBool("Attacking", true);
-            SendMessage("SetAttacking", weapon);
+            AttackInput?.Invoke();
             StartCoroutine(nameof(AttackTimer));
         }
     }
 
     private IEnumerator AttackTimer()
     {
-        yield return new WaitForSeconds(weapon.GetComponent<Weapon>().attackTime);
+        yield return new WaitForSeconds(1);
         animator.SetBool("Attacking", false);
         attacking = false;
-        SendMessage("SetAttacking", weapon);
     }
 
     // Deal with taking damage
@@ -122,22 +107,24 @@ public class PlayerController : MonoBehaviour
         animator.Play("Default Idle");
     }
 
-    private void CycleWeapons()
-    {
-        WeaponIndex += 1;
-        if (WeaponIndex > WeaponList.Capacity)
-        {
-            WeaponIndex = 0;
-        }
-        
-        if (weapon != null)
-        {
-            weapon.SetActive(false);
-        }
-
-        weapon = WeaponList[WeaponIndex];
-        weapon.SetActive(true);
-    }
+    // private void CycleWeapons()
+    // {
+    //     WeaponIndex += 1;
+    //     if (WeaponIndex > WeaponList.Capacity)
+    //     {
+    //         WeaponIndex = 0;
+    //     }
+    //     
+    //     if (weapon != null)
+    //     {
+    //         weapon.SetActive(false);
+    //     }
+    //
+    //     weapon = WeaponList[WeaponIndex];
+    //     weapon.SetActive(true);
+    // }
+    //
+    
     // =================== Weapon Swapping ================== //
     // below is some weapon swapping code that needs revisited.
     // I didn't really get the chance to finish what I had

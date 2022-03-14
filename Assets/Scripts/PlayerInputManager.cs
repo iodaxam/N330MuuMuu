@@ -24,22 +24,18 @@ public class PlayerInputManager : MonoBehaviour
 	void OnPlayerJoined()
 	{
 		UpdatePlayerList();
-		Debug.Log("Player joined");
-		Debug.Log(m_PlayerList.Length);
 		AudioScript.Play("Player Join");
 	}
 
 	void OnPlayerLeft()
 	{
 		UpdatePlayerList();
-		Debug.Log("Player Left");
-		Debug.Log(m_PlayerList.Length);
 	}
 
 	void UpdatePlayerList()
 	{
 		m_PlayerList = GameObject.FindGameObjectsWithTag("Player");
-		Debug.Log(m_PlayerList.Length);
+		Debug.Log("Current player count: " + m_PlayerList.Length);
 	}
 
 	private void Update()
