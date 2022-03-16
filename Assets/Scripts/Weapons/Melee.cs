@@ -16,14 +16,13 @@ namespace Weapons
             PlayerController.AttackInput += Attack;
             attackTime = weaponData.attackTime;
             weaponData.attacking = false;
-            Physics.IgnoreCollision(transform.GetComponent<CapsuleCollider>(), transform.GetComponentInParent<CapsuleCollider>()); // prevent weapon from attacking parent
+            //Physics.IgnoreCollision(transform.GetComponent<CapsuleCollider>(), transform.GetComponentInParent<CapsuleCollider>()); // prevent weapon from attacking parent
         }
 
         public void Attack()
         {
             weaponData.attacking = true;
             StartCoroutine(nameof(AttackTimer));
-            Debug.Log("Attacking");
         }
         
         private IEnumerator AttackTimer()
@@ -34,13 +33,11 @@ namespace Weapons
         
         private void OnTriggerEnter(Collider other) // if it collides with a player it will send the take damage message
         {
-            if(other.CompareTag("Player")) {
-                if(weaponData.attacking)
-                {
-                    other.SendMessage("TakeDamage", weaponData.damage);
-                    Debug.Log("DamageInflicted");
-                }
-            }
+            if (!other.CompareTag("Player")) return;
+            if (!weaponData.attacking) return;
+            Debug.Log("Other: " + other.name);
+            other.SendMessage("TakeDamage", weaponData.damage);
+            Debug.Log("DamageInflicted");
         }
     
     }

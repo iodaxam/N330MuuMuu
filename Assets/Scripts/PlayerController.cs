@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     // Movement
     [Header("Movement")]
     public float speed = 5;
-    public float rotationSpeed = 70f; 
+    public float rotationSpeed = 70f;
     
     private Vector2 movementInput;
     [HideInInspector] public Vector3 spawnLocation; // this is handled by the player input manager
@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [Header("Health")]
     public int MaxLives = 3;
     public float maxHealth = 100;
+    public HealthBar HealthBar;
     
     private int CurrentLives;
     private bool isDead;
@@ -33,16 +34,18 @@ public class PlayerController : MonoBehaviour
     private bool attacking;
 
     // Components
-    // [Header("References")] // Only needed for public variables.
-    [HideInInspector] [SerializeField] private Transform[] weapons;
-    private HealthBar HealthBar;
+    //[Header("References")] // Headers only needed for public variables.
+    [SerializeField] private Transform[] weapons;
     private Animator animator;
+    private GameObject GameManager;
+    private GameManager GMscript;
 
     private void Start()
     {
         // Get components
+        GameManager = GameObject.FindWithTag("GameManager");
         animator = GetComponent<Animator>();
-        HealthBar = GetComponent<HealthBar>();
+        GMscript = GameManager.GetComponent<GameManager>();
 
         // Set variables
         transform.position = spawnLocation;
@@ -60,13 +63,22 @@ public class PlayerController : MonoBehaviour
         if (isDead) return; // temporary code for testing death
         
         
-        if(movementInput != Vector2.zero && !attacking)
+        if(movementInput != Vector2.zero)
         {
-            animator.SetBool("Moving", true); // tell animator player is moving
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            if (!attacking)
+            {
+                animator.SetBool("Moving", true); // tell animator player is moving
+                transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
-            //Smoothly Rotate player in direction of the input
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(movementInput.x, 0f, movementInput.y)), Time.deltaTime * rotationSpeed);
+                //Smoothly Rotate player in direction of the input
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(new Vector3(movementInput.x, 0f, movementInput.y)), Time.deltaTime * rotationSpeed);
+            }
+
+            if (GMscript.StopLightState == EnumStopLight.RedLightState)
+            {
+                TakeDamage(0.1f);
+            }
+            
         }
         else if (movementInput == Vector2.zero)
         {
@@ -83,7 +95,6 @@ public class PlayerController : MonoBehaviour
         Debug.Log("OnPrimaryAttack");
         if(!attacking)
         {
-            Debug.Log("Attacking");
             attacking = true;
             animator.SetBool("Attacking", true);
             AttackInput?.Invoke();
@@ -102,8 +113,8 @@ public class PlayerController : MonoBehaviour
     private void TakeDamage(float damageAmount)
     {
         HealthBar.TakeDamage(damageAmount);
-        animator.SetBool("GotHit", true);
-        StartCoroutine(nameof(StaggerTime));
+        //animator.SetBool("GotHit", true);
+        //StartCoroutine(nameof(StaggerTime));
     }
     
     private IEnumerator StaggerTime()
@@ -146,7 +157,6 @@ public class PlayerController : MonoBehaviour
         
         for (int i = 0; i < weapons.Length; i++)
         {
-            Debug.Log(weapons[i].gameObject.name);
             weapons[i].gameObject.SetActive(i == WeaponIndex);
         }
     }

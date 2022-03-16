@@ -4356,7 +4356,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1186541254}
-  m_LocalRotation: {x: 0.31030247, y: 0.000000023132346, z: -0.000000007550745, w: 0.9506379}
+  m_LocalRotation: {x: 0.31030247, y: -0.000000023132339, z: 0.000000007550743, w: 0.9506379}
   m_LocalPosition: {x: 0, y: 6.43, z: -8.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -5341,9 +5341,29 @@ PrefabInstance:
       propertyPath: AudioManager
       value: 
       objectReference: {fileID: 511105001}
+    - target: {fileID: 6104618783337129552, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
+      propertyPath: spawnManager
+      value: 
+      objectReference: {fileID: 122080886}
     - target: {fileID: 7998616700665580051, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
       propertyPath: m_Name
       value: Player Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
+      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
+      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.data[4].m_Id
+      value: cfb3f94c-40aa-4762-ba89-c80e5f6a0a98
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
+      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.data[4].m_Path
+      value: <Mouse>/leftButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 7998616700665580052, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
+      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.data[4].m_Action
+      value: Join
       objectReference: {fileID: 0}
     - target: {fileID: 7998616700665580053, guid: 1a77de121b09bb24da6c888ec6282bed, type: 3}
       propertyPath: m_RootOrder
@@ -6282,7 +6302,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641107730}
-  m_LocalRotation: {x: 0.31030247, y: 0.000000023132346, z: -0.000000007550745, w: 0.9506379}
+  m_LocalRotation: {x: 0.31030247, y: -0.000000023132339, z: 0.000000007550743, w: 0.9506379}
   m_LocalPosition: {x: 0, y: 6.43, z: -8.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
