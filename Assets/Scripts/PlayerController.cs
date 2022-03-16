@@ -1,48 +1,54 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 //using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Weapons;
 
 public class PlayerController : MonoBehaviour
 {
     
-    private Animator animator;
     public static Action AttackInput;
     
     // Movement
     [Header("Movement")]
     public float speed = 5;
-    private Vector2 movementInput;
     public float rotationSpeed = 70f; 
+    
+    private Vector2 movementInput;
+    [HideInInspector] public Vector3 spawnLocation; // this is handled by the player input manager
     
     // Health
     [Header("Health")]
     public int MaxLives = 3;
-    private int CurrentLives;
     public float maxHealth = 100;
+    
+    private int CurrentLives;
     private bool isDead;
 
     // Combat
     [Header("Combat")]
-    private int WeaponIndex;
     public GameObject WeaponManager;
+   
+    private int WeaponIndex;
     private bool attacking;
 
-    // Scripts
-    [Header("References")]
-    [SerializeField] private Transform[] weapons;
+    // Components
+    // [Header("References")] // Only needed for public variables.
+    [HideInInspector] [SerializeField] private Transform[] weapons;
     private HealthBar HealthBar;
+    private Animator animator;
 
     private void Start()
     {
-        CurrentLives = MaxLives;
+        // Get components
         animator = GetComponent<Animator>();
         HealthBar = GetComponent<HealthBar>();
-        Debug.Log("Weapons.length: " + weapons.Length);
+
+        // Set variables
+        transform.position = spawnLocation;
+        CurrentLives = MaxLives;
         
+        // Call functions
         InitializeWeapons();
         animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be set based on weapon carried
     }

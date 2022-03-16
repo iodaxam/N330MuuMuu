@@ -6,28 +6,47 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
+using Random = System.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class PlayerInputManager : MonoBehaviour
 {
 	public GameObject playerAverage;
+	public GameObject spawnManager;
 	
 	private GameObject[] m_PlayerList;
 
 	public GameObject AudioManager;
 	private AudioManager AudioScript;
+	
+	private Transform[] Team1Spawns;
+	private Transform[] Team2Spawns;
+	private Transform[] MenuSpawns;
 
-	void Start() {
+	void Start()
+	{
+		SetupSpawnLists();
 		AudioScript = AudioManager.GetComponent<AudioManager>();
 	}
 
-	void OnPlayerJoined()
+	public void OnPlayerJoined(PlayerInput playerInput)
 	{
 		UpdatePlayerList();
-		AudioScript.Play("Player Join");
+		Debug.Log("PlayerInput ID: " + playerInput.playerIndex);
+		Random spawnLocation = new Random();
+		
+		if (playerInput.playerIndex % 2 == 0)
+		{
+			playerInput.gameObject.GetComponent<PlayerController>().spawnLocation = Team1Spawns[spawnLocation.Next(0, 2)].position;
+		}
+		else if (playerInput.playerIndex % 2 == 1)
+		{
+			playerInput.gameObject.GetComponent<PlayerController>().spawnLocation = Team2Spawns[spawnLocation.Next(0, 2)].position;
+		}
+		// AudioScript.Play("Player Join"); // may be better to call an event that the GameManager subscribes to and leave audio out of this
 	}
 
-	void OnPlayerLeft()
+	public void OnPlayerLeft()
 	{
 		UpdatePlayerList();
 	}
@@ -36,6 +55,34 @@ public class PlayerInputManager : MonoBehaviour
 	{
 		m_PlayerList = GameObject.FindGameObjectsWithTag("Player");
 		Debug.Log("Current player count: " + m_PlayerList.Length);
+	}
+
+	void SetupSpawnLists()
+	{
+		Transform[] spawnManagerChildren = new Transform[spawnManager.transform.childCount];
+		
+		for (int i = 0; i < spawnManagerChildren.Length; i++)
+		{
+			spawnManagerChildren[i] = spawnManager.transform.GetChild(i);
+		}
+		
+		Team1Spawns = new Transform[spawnManagerChildren[0].transform.childCount];
+		Team2Spawns = new Transform[spawnManagerChildren[1].transform.childCount];
+		MenuSpawns = new Transform[spawnManagerChildren[2].transform.childCount];
+
+		for (int i = 0; i < Team1Spawns.Length; i++)
+		{
+			Team1Spawns[i] = spawnManagerChildren[0].transform.GetChild(i);
+		}
+		
+		for (int i = 0; i < Team2Spawns.Length; i++)
+		{
+			Team2Spawns[i] = spawnManagerChildren[1].transform.GetChild(i);
+		}
+		for (int i = 0; i < MenuSpawns.Length; i++)
+		{
+			MenuSpawns[i] = spawnManagerChildren[2].transform.GetChild(i);
+		}
 	}
 
 	private void Update()
