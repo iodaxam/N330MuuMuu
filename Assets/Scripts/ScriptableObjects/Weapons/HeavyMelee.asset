@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: HeavyMelee
   damage: 25
-  swingTime: 1.267
+  attackTime: 1.267
+  attacking: 0

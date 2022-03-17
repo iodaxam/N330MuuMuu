@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float speed = 5;
     public float rotationSpeed = 70f;
+    public float staggerTime = 0.5f; // amount of time the player is in the 'staggered' state when they are hit.
     
     private Vector2 movementInput;
     [HideInInspector] public Vector3 spawnLocation; // this is handled by the player input manager
@@ -29,7 +30,8 @@ public class PlayerController : MonoBehaviour
     // Combat
     [Header("Combat")]
     public GameObject WeaponManager;
-   
+
+    private bool canAttack = true;
     private int WeaponIndex;
     private bool attacking;
 
@@ -93,7 +95,7 @@ public class PlayerController : MonoBehaviour
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
         Debug.Log("OnPrimaryAttack");
-        if(!attacking)
+        if(!attacking && canAttack)
         {
             attacking = true;
             animator.SetBool("Attacking", true);
@@ -113,13 +115,15 @@ public class PlayerController : MonoBehaviour
     private void TakeDamage(float damageAmount)
     {
         HealthBar.TakeDamage(damageAmount);
-        //animator.SetBool("GotHit", true);
-        //StartCoroutine(nameof(StaggerTime));
+       
+        if (!(damageAmount > 1)) return;
+        animator.SetBool("GotHit", true);
+        StartCoroutine(nameof(StaggerTime));
     }
     
     private IEnumerator StaggerTime()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(staggerTime);
         animator.SetBool("GotHit", false);
     }
     
@@ -128,6 +132,7 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         animator.SetBool("Dead", true);
         animator.Play("Default Idle");
+        canAttack = false;
     }
 
     private void InitializeWeapons()
