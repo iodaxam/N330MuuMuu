@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum EnumStopLight {RedLightState, YellowLightState, GreenLightState};
 
@@ -23,6 +24,12 @@ public class GameManager : MonoBehaviour
 
     public float LightIntensity = 1f;
 
+    //Game timer
+    public float GameTimer = 30f;
+    private float CurrentGameTimer;
+    public GameObject TimerTextObject;
+    private Text TimerTextComponent;
+
     void Start()
     {
         AudioScript = AudioManager.GetComponent<AudioManager>();
@@ -33,15 +40,34 @@ public class GameManager : MonoBehaviour
 
         Timer = Random.Range(GreenLightMinTime, GreenLightMaxTime);
 
+        TimerTextComponent = TimerTextObject.GetComponent<Text>();
+
         foreach(GameObject trafficLight in StopLights)
         {
             trafficLight.SendMessage("ChangeIntensity", StopLightState);
         }
+
+        CurrentGameTimer = GameTimer;
     }
 
     void Update()
     {
         StopLightTimer();
+
+        if(CurrentGameTimer > 0f)
+        {
+            CurrentGameTimer -= Time.deltaTime;
+
+            TimerTextComponent.text = Mathf.RoundToInt(CurrentGameTimer).ToString();
+            if(Mathf.RoundToInt(CurrentGameTimer) == 10)
+            {
+                TimerTextComponent.color = Color.red;
+            }
+        }
+        else if(CurrentGameTimer <= 0f)
+        {
+            Debug.Log("Game Over");
+        }
     }
 
     private void StopLightTimer()
