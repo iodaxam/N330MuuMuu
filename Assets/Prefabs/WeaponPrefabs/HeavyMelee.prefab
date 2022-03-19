@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8803369341151459069}
   - component: {fileID: 2690336899005950823}
   m_Layer: 0
-  m_Name: HeavyWeapon
+  m_Name: HeavyMelee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

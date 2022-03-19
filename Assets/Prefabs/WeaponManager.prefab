@@ -85,7 +85,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4839160383543839557, guid: 12d0ccef35de76e4e81cc5cc9b385a87, type: 3}
       propertyPath: m_Name
-      value: HeavyWeapon (1)
+      value: HeavyMelee
       objectReference: {fileID: 0}
     - target: {fileID: 4839160383543839557, guid: 12d0ccef35de76e4e81cc5cc9b385a87, type: 3}
       propertyPath: m_TagString
@@ -155,7 +155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4839160383543839557, guid: 12d0ccef35de76e4e81cc5cc9b385a87, type: 3}
       propertyPath: m_Name
-      value: HeavyWeapon
+      value: HeavyMelee
       objectReference: {fileID: 0}
     - target: {fileID: 4839160383543839557, guid: 12d0ccef35de76e4e81cc5cc9b385a87, type: 3}
       propertyPath: m_TagString

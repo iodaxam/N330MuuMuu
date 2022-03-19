@@ -1,13 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public enum EnumStopLight {RedLightState, YellowLightState, GreenLightState};
 
 public class GameManager : MonoBehaviour
 {
+    public Action StartGame;
+    
     [Header("Cameras")] 
     public Camera MainCam;
     public Camera MenuCam;
@@ -34,6 +38,8 @@ public class GameManager : MonoBehaviour
     private float CurrentGameTimer;
     public GameObject TimerTextObject;
     private Text TimerTextComponent;
+
+    private int readyPlayers = 0;
 
     void Start()
     {
@@ -112,10 +118,19 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-
+    
     public void Ready()
     {
-        MenuCam.enabled = !MenuCam.enabled;
-        MainCam.enabled = !MainCam.enabled;
+        readyPlayers++;
+        if (readyPlayers == GameObject.FindGameObjectsWithTag("Player").Length && readyPlayers > 1)
+        {
+            StartGame?.Invoke();
+            MenuCam.enabled = !MenuCam.enabled;
+            MainCam.enabled = !MainCam.enabled;
+        } 
+        else if (readyPlayers <= 1) 
+        {
+            Debug.Log("Need at least 2 players");
+        }
     }
 }

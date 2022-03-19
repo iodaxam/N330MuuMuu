@@ -30,10 +30,10 @@ public class PlayerController : MonoBehaviour
     // Combat
     [Header("Combat")]
     public GameObject WeaponManager;
-
-    private bool canAttack = true;
+    
     private int WeaponIndex;
     private bool attacking;
+    private string WeaponName;
 
     // Components
     //[Header("References")] // Headers only needed for public variables.
@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
     public GameObject SelectorUI;
 
     private bool Ready = false;
+    private bool GameStarted = false;
     [HideInInspector] public int playerID; // set by input manager
 
     private void Start()
@@ -55,22 +56,23 @@ public class PlayerController : MonoBehaviour
         GameManager = GameObject.FindWithTag("GameManager");
         animator = GetComponent<Animator>();
         GMscript = GameManager.GetComponent<GameManager>();
-
+        
         // Set variables
         transform.position = spawnLocation;
         CurrentLives = MaxLives;
         transform.LookAt(Camera.main.transform);
         
         // Call functions
+        GMscript.StartGame += StartGame;
         InitializeWeapons();
-        animator.SetTrigger("HeavyMelee"); // for testing purposes only. Should be set based on weapon carried
+        animator.SetTrigger(WeaponName); // for testing purposes only. Should be set based on weapon carried
     }
 
     private void Update()
     {
         if (isDead) return; // temporary code for testing death
         
-        if(movementInput != Vector2.zero)
+        if(movementInput != Vector2.zero && GameStarted)
         {
             if (!attacking)
             {
@@ -93,13 +95,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void StartGame()
+    {
+        GameStarted = true;
+    }
+
     // Movement code
     public void OnMove(InputAction.CallbackContext context) => movementInput = context.ReadValue<Vector2>();
 
     //Input information for the lmb
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
-        if(!attacking && canAttack)
+        if(!attacking && !isDead/* && GameStarted*/)
         {
             attacking = true;
             animator.SetBool("Attacking", true);
@@ -129,14 +136,14 @@ public class PlayerController : MonoBehaviour
         HealthBar.TakeDamage(damageAmount);
        
         if (!(damageAmount > 1)) return;
-        animator.SetBool("GotHit", true);
+        animator.SetBool("Impact", true);
         StartCoroutine(nameof(StaggerTime));
     }
     
     private IEnumerator StaggerTime()
     {
         yield return new WaitForSeconds(staggerTime);
-        animator.SetBool("GotHit", false);
+        animator.SetBool("Impact", false);
     }
     
     private void Died()
@@ -144,7 +151,6 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         animator.SetBool("Dead", true);
         animator.Play("Default Idle");
-        canAttack = false;
     }
 
     private void InitializeWeapons()
@@ -174,7 +180,18 @@ public class PlayerController : MonoBehaviour
         
         for (int i = 0; i < weapons.Length; i++)
         {
-            weapons[i].gameObject.SetActive(i == WeaponIndex);
+            if (i == WeaponIndex)
+            {
+                animator.ResetTrigger(WeaponName);
+                weapons[i].gameObject.SetActive(true);
+                WeaponName = weapons[i].gameObject.name;
+                animator.Play("Default Idle");
+                animator.SetTrigger(WeaponName);
+            }
+            else
+            {
+                weapons[i].gameObject.SetActive(false);
+            }
         }
     }
     
