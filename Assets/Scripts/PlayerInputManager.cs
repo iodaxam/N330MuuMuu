@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;
@@ -23,7 +24,9 @@ public class PlayerInputManager : MonoBehaviour
 	private Transform[] Team2Spawns;
 	private Transform[] MenuSpawns;
 
-	void Start()
+	private int nextPlayerID = 0;
+
+	private void Start()
 	{
 		SetupSpawnLists();
 		AudioScript = AudioManager.GetComponent<AudioManager>();
@@ -34,21 +37,19 @@ public class PlayerInputManager : MonoBehaviour
 		UpdatePlayerList();
 		Debug.Log("PlayerInput ID: " + playerInput.playerIndex);
 		Random spawnLocation = new Random();
-		
-		if (playerInput.playerIndex % 2 == 0)
-		{
-			playerInput.gameObject.GetComponent<PlayerController>().spawnLocation = Team1Spawns[spawnLocation.Next(0, 2)].position;
-		}
-		else if (playerInput.playerIndex % 2 == 1)
-		{
-			playerInput.gameObject.GetComponent<PlayerController>().spawnLocation = Team2Spawns[spawnLocation.Next(0, 2)].position;
-		}
-		// AudioScript.Play("Player Join"); // may be better to call an event that the GameManager subscribes to and leave audio out of this
+
+		var currentPlayerScript = playerInput.gameObject.GetComponent<PlayerController>();
+		currentPlayerScript.playerID = nextPlayerID;
+		currentPlayerScript.spawnLocation = MenuSpawns[nextPlayerID].position;
+		nextPlayerID++;
+
+		// AudioScript.Play("Player Join"); // may be better to call an event that the GameManager subscribes to and leave audio out of this script altogether
 	}
 
 	public void OnPlayerLeft()
 	{
 		UpdatePlayerList();
+		nextPlayerID--;
 	}
 
 	void UpdatePlayerList()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,13 +8,17 @@ public enum EnumStopLight {RedLightState, YellowLightState, GreenLightState};
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Cameras")] 
+    public Camera MainCam;
+    public Camera MenuCam;
+    
     public GameObject AudioManager;
     private AudioManager AudioScript;
 
     private GameObject[] StopLights;
 
     public EnumStopLight StopLightState;
-
+    
     private float Timer;
     public float GreenLightMaxTime;
     public float GreenLightMinTime;
@@ -32,6 +37,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        MenuCam.enabled = true;
+        MainCam.enabled = false;
+        
         AudioScript = AudioManager.GetComponent<AudioManager>();
 
         StopLights = GameObject.FindGameObjectsWithTag("StopLight");
@@ -103,5 +111,11 @@ public class GameManager : MonoBehaviour
                 trafficLight.SendMessage("ChangeIntensity", StopLightState);
             }
         }
+    }
+
+    public void Ready()
+    {
+        MenuCam.enabled = !MenuCam.enabled;
+        MainCam.enabled = !MainCam.enabled;
     }
 }

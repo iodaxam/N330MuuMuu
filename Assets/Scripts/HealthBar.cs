@@ -24,6 +24,7 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
+        m_Cam = Camera.main;
         healthBar.GetComponent<Slider>().value = m_CurrentHealth;
         healthBar.transform.LookAt(m_Cam.transform);
     }

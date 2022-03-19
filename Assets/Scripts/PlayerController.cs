@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public float staggerTime = 0.5f; // amount of time the player is in the 'staggered' state when they are hit.
     
     private Vector2 movementInput;
-    [HideInInspector] public Vector3 spawnLocation; // this is handled by the player input manager
+    [HideInInspector] public Vector3 spawnLocation = Vector3.zero; // this is handled by the player input manager
     
     // Health
     [Header("Health")]
@@ -42,6 +42,13 @@ public class PlayerController : MonoBehaviour
     private GameObject GameManager;
     private GameManager GMscript;
 
+    [Header("UI Elements")] 
+    public GameObject HealthBarUI;
+    public GameObject SelectorUI;
+
+    private bool Ready = false;
+    [HideInInspector] public int playerID; // set by input manager
+
     private void Start()
     {
         // Get components
@@ -52,6 +59,7 @@ public class PlayerController : MonoBehaviour
         // Set variables
         transform.position = spawnLocation;
         CurrentLives = MaxLives;
+        transform.LookAt(Camera.main.transform);
         
         // Call functions
         InitializeWeapons();
@@ -60,10 +68,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(rb.velocity.normalized);
-
         if (isDead) return; // temporary code for testing death
-        
         
         if(movementInput != Vector2.zero)
         {
@@ -94,7 +99,6 @@ public class PlayerController : MonoBehaviour
     //Input information for the lmb
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
-        Debug.Log("OnPrimaryAttack");
         if(!attacking && canAttack)
         {
             attacking = true;
@@ -104,6 +108,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnReady(InputAction.CallbackContext context)
+    {
+        Debug.Log("Ready");
+        if (Ready) return;
+        Ready = true;
+        GMscript.Ready();
+    }
+    
     private IEnumerator AttackTimer()
     {
         yield return new WaitForSeconds(1.267f);
@@ -165,4 +177,5 @@ public class PlayerController : MonoBehaviour
             weapons[i].gameObject.SetActive(i == WeaponIndex);
         }
     }
+    
 }

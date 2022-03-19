@@ -15,12 +15,15 @@ namespace Weapons
 
         private List<Collider> hasBeenHit;
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             hasBeenHit = new List<Collider>(GameObject.FindGameObjectsWithTag("Player").Length);
+            
             PlayerController.AttackInput += Attack;
+            
             attackTime = weaponData.attackTime;
             weaponData.attacking = false;
+            
             Physics.IgnoreCollision(transform.GetComponent<CapsuleCollider>(), transform.GetComponentInParent<CapsuleCollider>()); // prevent weapon from attacking parent
         }
 

@@ -3102,6 +3102,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3f2ee084-6e2c-4d16-a68b-d2e9969e5b76
     m_ActionName: Gameplay/PrimaryAttack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7466097060890924329}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnReady
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fe10c4d2-d0c9-4408-bafc-6183fc65dc75
+    m_ActionName: Gameplay/Ready[/Keyboard/r]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
@@ -3121,12 +3137,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   rotationSpeed: 70
+  staggerTime: 0.5
   spawnLocation: {x: 0, y: 0, z: 0}
   MaxLives: 3
   maxHealth: 100
   HealthBar: {fileID: 5639513163437820560}
   WeaponManager: {fileID: 9118674590571453252}
   weapons: []
+  HealthBarUI: {fileID: 8743432465022213963}
+  SelectorUI: {fileID: 0}
+  playerID: 0
 --- !u!1 &8581546005893027953
 GameObject:
   m_ObjectHideFlags: 0
