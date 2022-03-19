@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +8,8 @@ namespace Weapons
 {
     public class Melee : MonoBehaviour
     {
+        public static Action DoneAttacking;
+        
         [Header("References")]
         [SerializeField] private WeaponData weaponData;
 
@@ -38,6 +41,7 @@ namespace Weapons
             yield return new WaitForSeconds(weaponData.attackTime);
             weaponData.attacking = false;
             hasBeenHit.Clear();
+            DoneAttacking?.Invoke();
         }
         
         private void OnTriggerEnter(Collider other) // if it collides with a player it will send the take damage message

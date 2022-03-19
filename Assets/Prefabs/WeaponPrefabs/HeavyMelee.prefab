@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca2155b0c64f2bb4a8de43909ca4d6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData: {fileID: 0}
+  weaponData: {fileID: 11400000, guid: e0960e3d1ad505c4a8f55ef6a9ed7bfb, type: 2}
   attackTime: 0
 --- !u!136 &2690336899005950823
 CapsuleCollider:

@@ -3,6 +3,7 @@ using System.Collections;
 //using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Weapons;
 
 public class PlayerController : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private int WeaponIndex;
     private bool attacking;
     private string WeaponName;
+    private WeaponData currentWeaponData;
 
     // Components
     //[Header("References")] // Headers only needed for public variables.
@@ -60,12 +62,12 @@ public class PlayerController : MonoBehaviour
         // Set variables
         transform.position = spawnLocation;
         CurrentLives = MaxLives;
-        transform.LookAt(Camera.main.transform);
-        
+        if (Camera.main != null) transform.LookAt(Camera.main.transform);
+
         // Call functions
         GMscript.StartGame += StartGame;
+        Melee.DoneAttacking += DoneAttacking;
         InitializeWeapons();
-        animator.SetTrigger(WeaponName); // for testing purposes only. Should be set based on weapon carried
     }
 
     private void Update()
@@ -111,7 +113,6 @@ public class PlayerController : MonoBehaviour
             attacking = true;
             animator.SetBool("Attacking", true);
             AttackInput?.Invoke();
-            StartCoroutine(nameof(AttackTimer));
         }
     }
 
@@ -123,9 +124,8 @@ public class PlayerController : MonoBehaviour
         GMscript.Ready();
     }
     
-    private IEnumerator AttackTimer()
+    private void DoneAttacking()
     {
-        yield return new WaitForSeconds(1.267f);
         animator.SetBool("Attacking", false);
         attacking = false;
     }
@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
             weapons[i] = WeaponManager.transform.GetChild(i);
         }
         
-        CycleWeapons(0);
+        CycleWeapons(1);
     }
     
     private void CycleWeapons(int change)
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
         {
             if (i == WeaponIndex)
             {
-                animator.ResetTrigger(WeaponName);
+                if (WeaponName != null) animator.ResetTrigger(WeaponName);
                 weapons[i].gameObject.SetActive(true);
                 WeaponName = weapons[i].gameObject.name;
                 animator.Play("Default Idle");
