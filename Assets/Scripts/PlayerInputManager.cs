@@ -12,10 +12,12 @@ using Vector3 = UnityEngine.Vector3;
 
 public class PlayerInputManager : MonoBehaviour
 {
+	public static Action MoveToArena;
+	
 	public GameObject playerAverage;
 	public GameObject spawnManager;
 	
-	private GameObject[] m_PlayerList;
+	private List<PlayerInput> m_PlayerList;
 
 	public GameObject AudioManager;
 	private AudioManager AudioScript;
@@ -24,41 +26,39 @@ public class PlayerInputManager : MonoBehaviour
 	private Transform[] Team2Spawns;
 	private Transform[] MenuSpawns;
 
-	private int nextPlayerID = 0;
+	private int playerID = 0;
 
 	private void Start()
 	{
 		SetupSpawnLists();
 		AudioScript = AudioManager.GetComponent<AudioManager>();
+		GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGame += StartGame;
 	}
 
 	public void OnPlayerJoined(PlayerInput playerInput)
 	{
-		UpdatePlayerList();
+		m_PlayerList = new List<PlayerInput>();
 		Debug.Log("PlayerInput ID: " + playerInput.playerIndex);
-		Random spawnLocation = new Random();
 
 		var currentPlayerScript = playerInput.gameObject.GetComponent<PlayerController>();
-		currentPlayerScript.playerID = nextPlayerID;
-		currentPlayerScript.spawnLocation = MenuSpawns[nextPlayerID].position;
-		nextPlayerID++;
+		currentPlayerScript.playerID = playerID;
+		currentPlayerScript.spawnLocation = MenuSpawns[playerID].position;
+		Debug.Log("Player added: " + playerInput);
+		m_PlayerList.Add(playerInput);
+		Debug.Log("Number of children in player list: " + m_PlayerList.Count);
+		playerID++;
 
 		// AudioScript.Play("Player Join"); // may be better to call an event that the GameManager subscribes to and leave audio out of this script altogether
 	}
 
 	public void OnPlayerLeft()
 	{
-		UpdatePlayerList();
-		nextPlayerID--;
+		m_PlayerList.RemoveAt(playerID);
+		playerID--;
 	}
 
-	void UpdatePlayerList()
-	{
-		m_PlayerList = GameObject.FindGameObjectsWithTag("Player");
-		Debug.Log("Current player count: " + m_PlayerList.Length);
-	}
 
-	void SetupSpawnLists()
+	private void SetupSpawnLists()
 	{
 		Transform[] spawnManagerChildren = new Transform[spawnManager.transform.childCount];
 		
@@ -75,7 +75,6 @@ public class PlayerInputManager : MonoBehaviour
 		{
 			Team1Spawns[i] = spawnManagerChildren[0].transform.GetChild(i);
 		}
-		
 		for (int i = 0; i < Team2Spawns.Length; i++)
 		{
 			Team2Spawns[i] = spawnManagerChildren[1].transform.GetChild(i);
@@ -88,17 +87,28 @@ public class PlayerInputManager : MonoBehaviour
 
 	private void Update()
 	{
-		
-		List<Vector3> playerPositions = new List<Vector3>();
+		var playerPositions = new List<Vector3>();
 
-		if (m_PlayerList != null)
+		// Make the camera follow the average between the players.
+		if (m_PlayerList == null) return;
+		playerPositions.AddRange(m_PlayerList.Select(player => player.gameObject.transform.position));
+		playerAverage.transform.position = playerPositions.Aggregate(new Vector3(0,0,0), (s,v) => s + v) / (float)playerPositions.Count;
+	}
+
+	private void StartGame()
+	{
+		// When it's time to start the game, make all the players move to the arena
+		foreach (PlayerInput player in m_PlayerList)
 		{
-			foreach (GameObject player in m_PlayerList)
+			Random spawn = new Random();
+			player.gameObject.GetComponent<PlayerController>().spawnLocation = (player.playerIndex % 2) switch
 			{
-				playerPositions.Add(player.transform.position);
-			}
-			playerAverage.transform.position = playerPositions.Aggregate(new Vector3(0,0,0), (s,v) => s + v) / (float)playerPositions.Count;
+				0 => Team1Spawns[spawn.Next(1, 2)].position,
+				1 => Team2Spawns[spawn.Next(1, 2)].position,
+				_ => player.gameObject.GetComponent<PlayerController>().spawnLocation
+			};
+			Debug.Log("Setting Spawns");
 		}
-
+		MoveToArena?.Invoke();
 	}
 }

@@ -19,12 +19,14 @@ public class HealthBar : MonoBehaviour
         healthBar.GetComponent<Slider>().maxValue = MaxHealth;
         m_CurrentHealth = MaxHealth;
         m_Cam = Camera.main;
+
+        GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGame += StartGame;
+        healthBar.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        m_Cam = Camera.main;
         healthBar.GetComponent<Slider>().value = m_CurrentHealth;
         healthBar.transform.LookAt(m_Cam.transform);
     }
@@ -40,5 +42,11 @@ public class HealthBar : MonoBehaviour
         {
             SendMessageUpwards("Died");
         }
+    }
+
+    private void StartGame()
+    {
+        m_Cam = Camera.main;
+        healthBar.gameObject.SetActive(true);
     }
 }

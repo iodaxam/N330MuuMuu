@@ -65,7 +65,8 @@ public class PlayerController : MonoBehaviour
         if (Camera.main != null) transform.LookAt(Camera.main.transform);
 
         // Call functions
-        GMscript.StartGame += StartGame;
+        PlayerInputManager.MoveToArena += StartGame;
+        //GMscript.StartGame += StartGame;
         Melee.DoneAttacking += DoneAttacking;
         InitializeWeapons();
     }
@@ -100,6 +101,7 @@ public class PlayerController : MonoBehaviour
     private void StartGame()
     {
         GameStarted = true;
+        transform.position = spawnLocation;
     }
 
     // Movement code
@@ -108,7 +110,7 @@ public class PlayerController : MonoBehaviour
     //Input information for the lmb
     public void OnPrimaryAttack(InputAction.CallbackContext context)
     {
-        if(!attacking && !isDead/* && GameStarted*/)
+        if(!attacking && !isDead && GameStarted)
         {
             attacking = true;
             animator.SetBool("Attacking", true);

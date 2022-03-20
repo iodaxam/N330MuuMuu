@@ -122,15 +122,15 @@ public class GameManager : MonoBehaviour
     public void Ready()
     {
         readyPlayers++;
-        if (readyPlayers == GameObject.FindGameObjectsWithTag("Player").Length && readyPlayers > 1)
-        {
+        /*if (readyPlayers == GameObject.FindGameObjectsWithTag("Player").Length && readyPlayers > 1)
+        {*/
             StartGame?.Invoke();
             MenuCam.enabled = !MenuCam.enabled;
             MainCam.enabled = !MainCam.enabled;
-        } 
+        /*} 
         else if (readyPlayers <= 1) 
         {
             Debug.Log("Need at least 2 players");
-        }
+        }*/
     }
 }
