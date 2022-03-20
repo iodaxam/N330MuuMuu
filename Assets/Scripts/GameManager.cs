@@ -41,6 +41,16 @@ public class GameManager : MonoBehaviour
 
     private int readyPlayers = 0;
 
+    void OnEnable()
+    {
+        PlayerInputManager.PlayerJoin += PlayerJoined;
+    }
+
+    void OnDisable()
+    {
+        PlayerInputManager.PlayerJoin -= PlayerJoined;
+    }
+
     void Start()
     {
         MenuCam.enabled = true;
@@ -132,5 +142,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Need at least 2 players");
         }*/
+    }
+
+    void PlayerJoined()
+    {
+        AudioScript.Play("Player Join");
     }
 }

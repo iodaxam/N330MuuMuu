@@ -19,8 +19,9 @@ public class PlayerInputManager : MonoBehaviour
 	
 	private List<PlayerInput> m_PlayerList;
 
-	public GameObject AudioManager;
-	private AudioManager AudioScript;
+	//Player join event
+	public delegate void JoinAction();
+	public static event JoinAction PlayerJoin;
 	
 	private Transform[] Team1Spawns;
 	private Transform[] Team2Spawns;
@@ -31,7 +32,6 @@ public class PlayerInputManager : MonoBehaviour
 	private void Start()
 	{
 		SetupSpawnLists();
-		AudioScript = AudioManager.GetComponent<AudioManager>();
 		GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGame += StartGame;
 	}
 
@@ -48,7 +48,8 @@ public class PlayerInputManager : MonoBehaviour
 		Debug.Log("Number of children in player list: " + m_PlayerList.Count);
 		playerID++;
 
-		// AudioScript.Play("Player Join"); // may be better to call an event that the GameManager subscribes to and leave audio out of this script altogether
+		//Made this for the audio
+		PlayerJoin.Invoke();
 	}
 
 	public void OnPlayerLeft()
