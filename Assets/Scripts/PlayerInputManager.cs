@@ -31,13 +31,13 @@ public class PlayerInputManager : MonoBehaviour
 
 	private void Start()
 	{
+		m_PlayerList = new List<PlayerInput>();
 		SetupSpawnLists();
 		GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGame += StartGame;
 	}
 
 	public void OnPlayerJoined(PlayerInput playerInput)
 	{
-		m_PlayerList = new List<PlayerInput>();
 		Debug.Log("PlayerInput ID: " + playerInput.playerIndex);
 
 		var currentPlayerScript = playerInput.gameObject.GetComponent<PlayerController>();
