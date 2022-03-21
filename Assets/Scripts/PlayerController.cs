@@ -56,6 +56,8 @@ public class PlayerController : MonoBehaviour
     public delegate void DiedAction();
     public static event DiedAction PlayerDied;
 
+    public GameObject TextPrefab;
+
     private void Start()
     {
         // Get components
@@ -146,6 +148,8 @@ public class PlayerController : MonoBehaviour
     // Deal with taking damage
     private void TakeDamage(float damageAmount)
     {
+        Instantiate(TextPrefab, transform.position, Quaternion.identity);
+
         HealthBar.TakeDamage(damageAmount);
        
         if (!(damageAmount > 1)) return;

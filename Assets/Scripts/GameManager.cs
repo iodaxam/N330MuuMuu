@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
         AudioScript.Play("Player Join");
     }
 
-    public void PlayerHit()
+    public void PlayerHitFunction()
     {
         AudioScript.Play("Heavy Hit");
     }

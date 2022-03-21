@@ -11,10 +11,13 @@ public class TextScript : MonoBehaviour
     public float Timer = 1f;
 
     private float CurrentLerpTime = 0f;
+    
+    private GameObject Camera;
 
     // Start is called before the first frame update
     void Start()
     {
+        Camera = GameObject.Find("Main Camera");
         Text.color = TextColor;
         Destroy(gameObject, Timer);
 
@@ -43,5 +46,7 @@ public class TextScript : MonoBehaviour
         transform.position += new Vector3(0f, Time.deltaTime * Speed, 0f);
 
         CurrentLerpTime += Time.deltaTime;
+
+        gameObject.transform.rotation = Quaternion.LookRotation( gameObject.transform.position - Camera.transform.position );
     }
 }

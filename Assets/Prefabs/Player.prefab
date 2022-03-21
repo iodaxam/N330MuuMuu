@@ -3147,6 +3147,7 @@ MonoBehaviour:
   HealthBarUI: {fileID: 8743432465022213963}
   SelectorUI: {fileID: 0}
   playerID: 0
+  TextPrefab: {fileID: 6108158912751566188, guid: f860839fb5cf230419ec386b6286bb0d, type: 3}
 --- !u!1 &8581546005893027953
 GameObject:
   m_ObjectHideFlags: 0

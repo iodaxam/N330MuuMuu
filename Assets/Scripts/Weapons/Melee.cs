@@ -27,7 +27,7 @@ namespace Weapons
         {
             GameManagerScript = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
 
-            PlayerHit += GameManagerScript.PlayerHit;
+            PlayerHit += GameManagerScript.PlayerHitFunction;
 
             hasBeenHit = new List<Collider>(GameObject.FindGameObjectsWithTag("Player").Length);
             
@@ -39,9 +39,9 @@ namespace Weapons
             Physics.IgnoreCollision(transform.GetComponent<CapsuleCollider>(), transform.GetComponentInParent<CapsuleCollider>()); // prevent weapon from attacking parent
         }
 
-        void OnDisable()
+        private void OnDestroy()
         {
-            PlayerHit -= GameManagerScript.PlayerHit;
+            PlayerHit -= GameManagerScript.PlayerHitFunction;
         }
 
         private void Attack()
