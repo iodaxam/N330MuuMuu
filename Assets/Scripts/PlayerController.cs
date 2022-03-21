@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Weapons;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
@@ -52,12 +53,17 @@ public class PlayerController : MonoBehaviour
     private bool GameStarted = false;
     [HideInInspector] public int playerID; // set by input manager
 
+    public delegate void DiedAction();
+    public static event DiedAction PlayerDied;
+
     private void Start()
     {
         // Get components
         GameManager = GameObject.FindWithTag("GameManager");
         animator = GetComponent<Animator>();
         GMscript = GameManager.GetComponent<GameManager>();
+
+        PlayerDied += GMscript.PlayerDied;
         
         // Set variables
         transform.position = spawnLocation;
@@ -71,10 +77,15 @@ public class PlayerController : MonoBehaviour
         InitializeWeapons();
     }
 
+    void OnDisable()
+    {
+        PlayerDied -= GMscript.PlayerDied;
+    }
+
     private void Update()
     {
         if (isDead) return; // temporary code for testing death
-        
+
         if(movementInput != Vector2.zero && GameStarted)
         {
             if (!attacking)
@@ -153,6 +164,7 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         animator.SetBool("Dead", true);
         animator.Play("Default Idle");
+        PlayerDied.Invoke();
     }
 
     private void InitializeWeapons()

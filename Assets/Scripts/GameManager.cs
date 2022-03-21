@@ -153,4 +153,18 @@ public class GameManager : MonoBehaviour
     {
         AudioScript.Play("Heavy Hit");
     }
+
+    public void PlayerDied()
+    {
+        int DeathSound = Random.Range(0,1);
+        switch(DeathSound)
+        {
+            case 0:
+                AudioScript.Play("DeathSound1");
+                break;
+            case 1:
+                AudioScript.Play("DeathSound2");
+                break;
+        }
+    }
 }
