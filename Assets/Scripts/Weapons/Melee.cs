@@ -9,6 +9,11 @@ namespace Weapons
     public class Melee : MonoBehaviour
     {
         public static Action DoneAttacking;
+
+        public delegate void HitAction();
+        public static event HitAction PlayerHit;
+
+        private GameManager GameManagerScript;
         
         [Header("References")]
         [SerializeField] private WeaponData weaponData;
@@ -20,6 +25,10 @@ namespace Weapons
         // Start is called before the first frame update
         private void Start()
         {
+            GameManagerScript = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
+
+            PlayerHit += GameManagerScript.PlayerHit;
+
             hasBeenHit = new List<Collider>(GameObject.FindGameObjectsWithTag("Player").Length);
             
             PlayerController.AttackInput += Attack;
@@ -28,6 +37,11 @@ namespace Weapons
             weaponData.attacking = false;
             
             Physics.IgnoreCollision(transform.GetComponent<CapsuleCollider>(), transform.GetComponentInParent<CapsuleCollider>()); // prevent weapon from attacking parent
+        }
+
+        void OnDisable()
+        {
+            PlayerHit -= GameManagerScript.PlayerHit;
         }
 
         private void Attack()
@@ -59,6 +73,8 @@ namespace Weapons
             
             hasBeenHit.Add(other);
             other.SendMessage("TakeDamage", weaponData.damage);
+
+            PlayerHit.Invoke();
         }
     
     }
