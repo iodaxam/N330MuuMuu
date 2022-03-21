@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     public static event DiedAction PlayerDied;
 
     public GameObject TextPrefab;
+    public GameObject JoinTextPrefab;
 
     private void Start()
     {
@@ -77,6 +78,8 @@ public class PlayerController : MonoBehaviour
         //GMscript.StartGame += StartGame;
         Melee.DoneAttacking += DoneAttacking;
         InitializeWeapons();
+
+        Instantiate(JoinTextPrefab, transform.position, Quaternion.identity);
     }
 
     void OnDisable()

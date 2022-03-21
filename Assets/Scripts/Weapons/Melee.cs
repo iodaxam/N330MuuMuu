@@ -39,9 +39,9 @@ namespace Weapons
             Physics.IgnoreCollision(transform.GetComponent<CapsuleCollider>(), transform.GetComponentInParent<CapsuleCollider>()); // prevent weapon from attacking parent
         }
 
-        private void OnDestroy()
+        void OnDisable()
         {
-            PlayerHit -= GameManagerScript.PlayerHitFunction;
+            //PlayerHit -= GameManagerScript.PlayerHitFunction;
         }
 
         private void Attack()

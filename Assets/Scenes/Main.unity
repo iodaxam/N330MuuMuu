@@ -4377,6 +4377,7 @@ MonoBehaviour:
   LightIntensity: 1
   GameTimer: 30
   TimerTextObject: {fileID: 969046191}
+  JoinTextPrefab: {fileID: 5502471516569027164, guid: c84eda91f5c21d34397438756c8e9fbc, type: 3}
 --- !u!4 &1145027076
 Transform:
   m_ObjectHideFlags: 0

@@ -4,15 +4,39 @@ using UnityEngine;
 
 public class JoinTextScript : MonoBehaviour
 {
+    public TextMesh Text;
+    public Color TextColor;
+
+    public float Speed = 2f;
+    public float Timer = 1f;
+
+    private float CurrentLerpTime = 0f;
+    
+    private GameObject Camera;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        Camera = GameObject.Find("Menu Camera");
+        Text.color = TextColor;
+        Destroy(gameObject, Timer);
+
+        Text.text = "Joined!";
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        float t = CurrentLerpTime/ Timer;
+        t = Mathf.Cos(t * Mathf.PI * .5f) * 2f;
+
+        TextColor.a = t;
+        Text.color = TextColor;
+        transform.position += new Vector3(0f, Time.deltaTime * Speed, 0f);
+
+        CurrentLerpTime += Time.deltaTime;
+
+        gameObject.transform.rotation = Quaternion.LookRotation( gameObject.transform.position - Camera.transform.position );
     }
 }
+
