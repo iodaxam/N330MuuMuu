@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public GameObject AudioManager;
     private AudioManager AudioScript;
 
+    [Header("Menus")] public Canvas MainMenu;
+
     private GameObject[] StopLights;
 
     public EnumStopLight StopLightState;
@@ -156,6 +158,7 @@ public class GameManager : MonoBehaviour
     void PlayerJoined()
     {
         AudioScript.Play("Player Join");
+        MainMenu.enabled = false;
     }
 
     public void PlayerHitFunction()
