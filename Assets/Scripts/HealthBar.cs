@@ -10,7 +10,9 @@ public class HealthBar : MonoBehaviour
     private float m_CurrentHealth = 30;
     
     public Slider healthBar;
-    private Camera m_Cam;
+    //private Camera m_Cam;
+
+    private GameObject MainCamera;
 
     // Start is called before the first frame update
     private void Start()
@@ -18,7 +20,9 @@ public class HealthBar : MonoBehaviour
         //healthBar = GetComponent<Slider>();
         healthBar.GetComponent<Slider>().maxValue = MaxHealth;
         m_CurrentHealth = MaxHealth;
-        m_Cam = Camera.main;
+        //m_Cam = Camera.main;
+
+        MainCamera = GameObject.Find("Main Camera");
 
         GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGame += StartGame;
         healthBar.gameObject.SetActive(false);
@@ -28,7 +32,9 @@ public class HealthBar : MonoBehaviour
     void LateUpdate()
     {
         healthBar.GetComponent<Slider>().value = m_CurrentHealth;
-        healthBar.transform.LookAt(m_Cam.transform);
+        healthBar.transform.LookAt(MainCamera.transform);
+
+        //Debug.Log(m_Cam.transform.position);
     }
 
     public void TakeDamage(float damageAmount)
@@ -46,7 +52,7 @@ public class HealthBar : MonoBehaviour
 
     private void StartGame()
     {
-        m_Cam = Camera.main;
+        //m_Cam = Camera.main;
         healthBar.gameObject.SetActive(true);
     }
 }
