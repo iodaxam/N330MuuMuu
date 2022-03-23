@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     private bool GameStarted = false;
 
+    public GameObject MenuCanvas;
+
     void OnEnable()
     {
         PlayerInputManager.PlayerJoin += PlayerJoined;
@@ -146,6 +148,10 @@ public class GameManager : MonoBehaviour
             MenuCam.enabled = !MenuCam.enabled;
             MainCam.enabled = !MainCam.enabled;
             GameStarted = true;
+
+            Destroy(MenuCanvas);
+            //make the ui invisible here
+
         /*} 
         else if (readyPlayers <= 1) 
         {
