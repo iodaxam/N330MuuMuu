@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour
 
     private int readyPlayers = 0;
 
+    private bool GameStarted = false;
+
     void OnEnable()
     {
         PlayerInputManager.PlayerJoin += PlayerJoined;
@@ -77,7 +79,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        StopLightTimer();
+        if(GameStarted)
+        {
+            StopLightTimer();
+        }
 
         //Game Timer
 
@@ -140,6 +145,7 @@ public class GameManager : MonoBehaviour
             StartGame?.Invoke();
             MenuCam.enabled = !MenuCam.enabled;
             MainCam.enabled = !MainCam.enabled;
+            GameStarted = true;
         /*} 
         else if (readyPlayers <= 1) 
         {
