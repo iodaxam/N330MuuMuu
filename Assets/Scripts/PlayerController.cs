@@ -60,6 +60,7 @@ public class PlayerController : MonoBehaviour
     public GameObject JoinTextPrefab;
 
     private float DamageCooldownTimer;
+    private bool CanSwap = true;
 
     private void Start()
     {
@@ -127,7 +128,22 @@ public class PlayerController : MonoBehaviour
     }
 
     // Movement code
-    public void OnMove(InputAction.CallbackContext context) => movementInput = context.ReadValue<Vector2>();
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>();
+        if (GameStarted == false && CanSwap)
+        {
+            CycleWeapons(Mathf.RoundToInt(movementInput.x));
+            CanSwap = false;
+            StartCoroutine(nameof(SwapCooldown));
+        }
+    }
+
+    private IEnumerator SwapCooldown()
+    {
+        yield return new WaitForSeconds(0.25f);
+        CanSwap = true;
+    }
 
     //Input information for the lmb
     public void OnPrimaryAttack(InputAction.CallbackContext context)
