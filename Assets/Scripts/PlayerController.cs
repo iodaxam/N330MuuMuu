@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
     public GameObject TextPrefab;
     public GameObject JoinTextPrefab;
 
+    private float DamageCooldownTimer;
+
     private void Start()
     {
         // Get components
@@ -90,6 +92,10 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (isDead) return; // temporary code for testing death
+
+        if(DamageCooldownTimer > 0f) {
+            DamageCooldownTimer -= Time.deltaTime;
+        }
 
         if(movementInput != Vector2.zero && GameStarted)
         {
@@ -151,7 +157,11 @@ public class PlayerController : MonoBehaviour
     // Deal with taking damage
     private void TakeDamage(float damageAmount)
     {
-        Instantiate(TextPrefab, transform.position, Quaternion.identity);
+        if(DamageCooldownTimer <= 0f)
+        {
+            Instantiate(TextPrefab, transform.position, Quaternion.identity);
+            DamageCooldownTimer = .5f;
+        }
 
         HealthBar.TakeDamage(damageAmount);
        
