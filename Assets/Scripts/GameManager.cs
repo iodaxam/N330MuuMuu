@@ -35,10 +35,10 @@ public class GameManager : MonoBehaviour
     public float LightIntensity = 1f;
 
     //Game timer
-    public float GameTimer = 30f;
-    private float CurrentGameTimer;
-    public GameObject TimerTextObject;
-    private Text TimerTextComponent;
+    // public float GameTimer = 30f;
+    // private float CurrentGameTimer;
+    // public GameObject TimerTextObject;
+    // private Text TimerTextComponent;
 
     private int readyPlayers = 0;
 
@@ -65,34 +65,36 @@ public class GameManager : MonoBehaviour
 
         Timer = Random.Range(GreenLightMinTime, GreenLightMaxTime);
 
-        TimerTextComponent = TimerTextObject.GetComponent<Text>();
+        // TimerTextComponent = TimerTextObject.GetComponent<Text>();
 
         foreach(GameObject trafficLight in StopLights)
         {
             trafficLight.SendMessage("ChangeIntensity", StopLightState);
         }
 
-        CurrentGameTimer = GameTimer;
+        // CurrentGameTimer = GameTimer;
     }
 
     void Update()
     {
         StopLightTimer();
 
-        if(CurrentGameTimer > 0f)
-        {
-            CurrentGameTimer -= Time.deltaTime;
+        //Game Timer
 
-            TimerTextComponent.text = Mathf.RoundToInt(CurrentGameTimer).ToString();
-            if(Mathf.RoundToInt(CurrentGameTimer) == 10)
-            {
-                TimerTextComponent.color = Color.red;
-            }
-        }
-        else if(CurrentGameTimer <= 0f)
-        {
-            Debug.Log("Game Over");
-        }
+        // if(CurrentGameTimer > 0f)
+        // {
+        //     CurrentGameTimer -= Time.deltaTime;
+
+        //     TimerTextComponent.text = Mathf.RoundToInt(CurrentGameTimer).ToString();
+        //     if(Mathf.RoundToInt(CurrentGameTimer) == 10)
+        //     {
+        //         TimerTextComponent.color = Color.red;
+        //     }
+        // }
+        // else if(CurrentGameTimer <= 0f)
+        // {
+        //     Debug.Log("Game Over");
+        // }
     }
 
     private void StopLightTimer()

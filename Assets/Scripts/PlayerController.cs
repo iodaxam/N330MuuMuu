@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
             if (GMscript.StopLightState == EnumStopLight.RedLightState)
             {
-                TakeDamage(0.1f);
+                TakeDamage(GMscript.DamageDrain);
             }
             
         }
