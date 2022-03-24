@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 {
     
     public static Action AttackInput;
-    
+
     // Movement
     [Header("Movement")]
     public float speed = 5;
@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
         if (!(damageAmount > 1)) return;
         animator.SetBool("Impact", true);
         StartCoroutine(nameof(StaggerTime));
+
     }
     
     private IEnumerator StaggerTime()

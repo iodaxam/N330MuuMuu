@@ -169,7 +169,33 @@ public class GameManager : MonoBehaviour
 
     public void PlayerHitFunction()
     {
-        AudioScript.Play("Heavy Hit");
+        String[] vocalHits = { "PlayerHit", "PlayerHit1", "PlayerHit2", "PlayerHit3" };
+        String[] lHits = { "LightHit1", "LightHit2"};
+        int vocalHit = Random.Range(0, vocalHits.Length);
+        int lHit = Random.Range(0, lHits.Length);
+        AudioScript.Play(vocalHits[vocalHit]);
+        AudioScript.Play(lHits[lHit]);
+
+
+        // int i = 0;
+        // foreach (String sound in sounds) {
+        //     i++;
+        //     switch(i)
+        //     {
+        //         case 0:
+        //             AudioScript.Play(sounds[0]);
+        //             break;
+        //         case 1:
+        //             AudioScript.Play(sounds[1]);
+        //             break;
+        //         case 2:
+        //             AudioScript.Play(sounds[2]);
+        //             break;
+        //         case 3:
+        //             AudioScript.Play(sounds[3]);
+        //             break;
+        //     }
+        // }
     }
 
     public void PlayerDied()
