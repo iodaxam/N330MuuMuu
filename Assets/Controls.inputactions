@@ -136,7 +136,7 @@
                 {
                     "name": "",
                     "id": "887d85d0-c00f-4cda-b98b-32c522126672",
-                    "path": "<Keyboard>/r",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -147,7 +147,7 @@
                 {
                     "name": "",
                     "id": "27296fe7-d274-4f84-b227-b9fe52560af4",
-                    "path": "<Gamepad>/rightTrigger",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

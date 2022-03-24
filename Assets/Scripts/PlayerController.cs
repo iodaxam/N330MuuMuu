@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
     {
         isDead = true;
         animator.SetBool("Dead", true);
-        animator.Play("Default Idle");
+        animator.Play("Death");
         PlayerDied.Invoke();
     }
 
