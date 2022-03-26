@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject MenuCanvas;
 
+    private float RestartTimer;
+
     void OnEnable()
     {
         PlayerInputManager.PlayerJoin += PlayerJoined;
@@ -86,6 +88,16 @@ public class GameManager : MonoBehaviour
         if(GameStarted)
         {
             StopLightTimer();
+        }
+
+        if(RestartTimer >= 0f)
+        {
+            RestartTimer -= Time.deltaTime;
+
+            if(RestartTimer <= 0f)
+            {
+                RestartRound();
+            }
         }
 
         //Game Timer
@@ -216,5 +228,12 @@ public class GameManager : MonoBehaviour
                 AudioScript.Play("DeathSound2");
                 break;
         }
+
+        RestartTimer = 2f;
+    }
+
+    public void RestartRound()
+    {
+
     }
 }
