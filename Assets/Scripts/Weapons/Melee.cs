@@ -10,7 +10,7 @@ namespace Weapons
     {
         public static Action DoneAttacking;
 
-        public delegate void HitAction();
+        public delegate void HitAction(bool LightWeapon);
         public static event HitAction PlayerHit;
 
         private GameManager GameManagerScript;
@@ -74,7 +74,13 @@ namespace Weapons
             hasBeenHit.Add(other);
             other.SendMessage("TakeDamage", weaponData.damage);
 
-            PlayerHit.Invoke();
+            if(weaponData.name == "LightMelee")
+            {
+                PlayerHit.Invoke(true);
+            } else if(weaponData.name == "HeavyMelee")
+            {
+                PlayerHit.Invoke(false);
+            }
         }
     
     }

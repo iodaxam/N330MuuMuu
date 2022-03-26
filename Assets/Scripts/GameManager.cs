@@ -167,14 +167,20 @@ public class GameManager : MonoBehaviour
         MainMenu.enabled = false;
     }
 
-    public void PlayerHitFunction()
+    public void PlayerHitFunction(bool LightAttack)
     {
         String[] vocalHits = { "PlayerHit", "PlayerHit1", "PlayerHit2", "PlayerHit3" };
         String[] lHits = { "LightHit1", "LightHit2"};
         int vocalHit = Random.Range(0, vocalHits.Length);
         int lHit = Random.Range(0, lHits.Length);
-        AudioScript.Play(vocalHits[vocalHit]);
-        AudioScript.Play(lHits[lHit]);
+
+        if(LightAttack)
+        {
+            AudioScript.Play(lHits[lHit]);
+        } else
+        {
+            AudioScript.Play(vocalHits[vocalHit]);
+        }
 
 
         // int i = 0;
