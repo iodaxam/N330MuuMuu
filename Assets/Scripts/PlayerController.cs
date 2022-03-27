@@ -83,6 +83,8 @@ public class PlayerController : MonoBehaviour
         InitializeWeapons();
 
         Instantiate(JoinTextPrefab, transform.position, Quaternion.identity);
+
+        GMscript.ResetPlayers += PlayerReset;
     }
 
     void OnDisable()
@@ -235,12 +237,28 @@ public class PlayerController : MonoBehaviour
                 WeaponName = weapons[i].gameObject.name;
                 animator.Play("Default Idle");
                 animator.SetTrigger(WeaponName);
+
+                if(WeaponName == "LightMelee")
+                {
+                    animator.SetBool("LightAttackWeaponEquiped?", true);
+                } else {
+                    animator.SetBool("LightAttackWeaponEquiped?", false);
+                }
+                    
             }
             else
             {
                 weapons[i].gameObject.SetActive(false);
             }
         }
+    }
+
+    public void PlayerReset() 
+    {
+        isDead = false;
+        animator.SetBool("Dead", false);
+        HealthBar.ResetHealth();
+        animator.StopPlayback();
     }
     
 }

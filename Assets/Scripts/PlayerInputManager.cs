@@ -96,7 +96,7 @@ public class PlayerInputManager : MonoBehaviour
 		playerAverage.transform.position = playerPositions.Aggregate(new Vector3(0,0,0), (s,v) => s + v) / (float)playerPositions.Count;
 	}
 
-	private void StartGame()
+	public void StartGame()
 	{
 		// When it's time to start the game, make all the players move to the arena
 		foreach (PlayerInput player in m_PlayerList)

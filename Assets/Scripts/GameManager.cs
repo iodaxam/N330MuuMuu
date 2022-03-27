@@ -11,6 +11,9 @@ public enum EnumStopLight {RedLightState, YellowLightState, GreenLightState};
 
 public class GameManager : MonoBehaviour
 {
+    public delegate void RestartAction();
+    public event RestartAction ResetPlayers;
+
     public Action StartGame;
     
     [Header("Cameras")] 
@@ -50,6 +53,9 @@ public class GameManager : MonoBehaviour
 
     private float RestartTimer;
 
+    public GameObject InputManagerPrefab;
+    private PlayerInputManager InputScript;
+
     void OnEnable()
     {
         PlayerInputManager.PlayerJoin += PlayerJoined;
@@ -62,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        InputScript = InputManagerPrefab.GetComponent<PlayerInputManager>();
         MenuCam.enabled = true;
         MainCam.enabled = false;
         
@@ -234,6 +241,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartRound()
     {
-
+        InputScript.StartGame();
+        ResetPlayers.Invoke();
     }
 }

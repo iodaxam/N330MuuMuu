@@ -55,4 +55,9 @@ public class HealthBar : MonoBehaviour
         //m_Cam = Camera.main;
         healthBar.gameObject.SetActive(true);
     }
+
+    public void ResetHealth()
+    {
+        m_CurrentHealth = MaxHealth;
+    }
 }
