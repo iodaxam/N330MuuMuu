@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
     private const float MaxHealth = 100;
-    private float m_CurrentHealth = 30;
+    private float m_CurrentHealth = 100;
     
     public Slider healthBar;
     //private Camera m_Cam;
 
     private GameObject MainCamera;
+    private int playerID;
+    private Slider UIBar;
 
     // Start is called before the first frame update
     private void Start()
@@ -26,6 +29,16 @@ public class HealthBar : MonoBehaviour
 
         GameObject.FindWithTag("GameManager").GetComponent<GameManager>().StartGame += StartGame;
         healthBar.gameObject.SetActive(false);
+
+        playerID = GetComponentInParent<PlayerController>().playerID;
+        GameObject canvas = GameObject.FindWithTag("Canvas");
+
+        Slider[] sliders = new Slider[playerID];
+        sliders = canvas.GetComponentsInChildren<Slider>();
+        
+        UIBar = sliders[playerID];
+        UIBar.maxValue = MaxHealth;
+        UIBar.value = m_CurrentHealth;
     }
 
     // Update is called once per frame
@@ -34,6 +47,7 @@ public class HealthBar : MonoBehaviour
         healthBar.GetComponent<Slider>().value = m_CurrentHealth;
         healthBar.transform.LookAt(MainCamera.transform);
 
+        UIBar.value = m_CurrentHealth;
         //Debug.Log(m_Cam.transform.position);
     }
 

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using Object = System.Object;
 
 public enum EnumStopLight {RedLightState, YellowLightState, GreenLightState};
 
@@ -15,6 +16,10 @@ public class GameManager : MonoBehaviour
     public event RestartAction ResetPlayers;
 
     public Action StartGame;
+
+    [Header("UI")] 
+    public GameObject UILight;
+    private Image[] Lights;
     
     [Header("Cameras")] 
     public Camera MainCam;
@@ -68,6 +73,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        
         InputScript = InputManagerPrefab.GetComponent<PlayerInputManager>();
         MenuCam.enabled = true;
         MainCam.enabled = false;
@@ -81,6 +87,15 @@ public class GameManager : MonoBehaviour
         Timer = Random.Range(GreenLightMinTime, GreenLightMaxTime);
 
         // TimerTextComponent = TimerTextObject.GetComponent<Text>();
+        Lights = UILight.GetComponentsInChildren<Image>();
+        Debug.Log(Lights.Length + "   Lights.length");
+
+        foreach (Image light in Lights)
+        {
+            light.enabled = false;
+        }
+
+        Lights[0].enabled = true;
 
         foreach(GameObject trafficLight in StopLights)
         {
@@ -138,16 +153,28 @@ public class GameManager : MonoBehaviour
                     Timer = Random.Range(GreenLightMinTime, GreenLightMaxTime);
                     AudioScript.Stop("Crosswalk Beep");
                     AudioScript.Play("Background Jazz");
+
+                                        
+                    Lights[2].enabled = false;
+                    Lights[0].enabled = true;
                     break;
+                
                 case EnumStopLight.YellowLightState:
                     StopLightState = EnumStopLight.RedLightState;
                     AudioScript.Play("Crosswalk Beep");
                     AudioScript.Stop("Background Jazz");
                     Timer = RedLightTime;
+                    
+                    Lights[1].enabled = false;
+                    Lights[2].enabled = true;
                     break;
+                
                 case EnumStopLight.GreenLightState:
                     StopLightState = EnumStopLight.YellowLightState;
                     Timer = YellowLightTime;
+                    
+                    Lights[0].enabled = false;
+                    Lights[1].enabled = true;
                     break;
             }
 

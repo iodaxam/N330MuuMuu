@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("UI Elements")] 
     public GameObject HealthBarUI;
-    public GameObject SelectorUI;
+    // public GameObject SelectorUI;
 
     private bool Ready = false;
     private bool GameStarted = false;
